@@ -1,0 +1,100 @@
+Suburb,Address,Rooms,Type,Price,Method,SellerG,Date,Distance,Postcode,Bedroom2,Bathroom,Car,Landsize,BuildingArea,YearBuilt,CouncilArea,Lattitude,Longtitude,Regionname,Propertycount
+Abbotsford,85 Turner St,2,h,1480000.0,S,Biggin,3/12/2016,2.5,3067.0,2.0,1.0,1.0,202.0,,,Yarra,-37.7996,144.9984,Northern Metropolitan,4019.0
+Abbotsford,25 Bloomburg St,2,h,1035000.0,S,Biggin,4/02/2016,2.5,3067.0,2.0,1.0,0.0,156.0,79.0,1900.0,Yarra,-37.8079,144.9934,Northern Metropolitan,4019.0
+Abbotsford,5 Charles St,3,h,1465000.0,SP,Biggin,4/03/2017,2.5,3067.0,3.0,2.0,0.0,134.0,150.0,1900.0,Yarra,-37.8093,144.9944,Northern Metropolitan,4019.0
+Abbotsford,40 Federation La,3,h,850000.0,PI,Biggin,4/03/2017,2.5,3067.0,3.0,2.0,1.0,94.0,,,Yarra,-37.7969,144.9969,Northern Metropolitan,4019.0
+Abbotsford,55a Park St,4,h,1600000.0,VB,Nelson,4/06/2016,2.5,3067.0,3.0,1.0,2.0,120.0,142.0,2014.0,Yarra,-37.8072,144.9941,Northern Metropolitan,4019.0
+Abbotsford,129 Charles St,2,h,941000.0,S,Jellis,7/05/2016,2.5,3067.0,2.0,1.0,0.0,181.0,,,Yarra,-37.8041,144.9953,Northern Metropolitan,4019.0
+Abbotsford,124 Yarra St,3,h,1876000.0,S,Nelson,7/05/2016,2.5,3067.0,4.0,2.0,0.0,245.0,210.0,1910.0,Yarra,-37.8024,144.9993,Northern Metropolitan,4019.0
+Abbotsford,98 Charles St,2,h,1636000.0,S,Nelson,8/10/2016,2.5,3067.0,2.0,1.0,2.0,256.0,107.0,1890.0,Yarra,-37.806,144.9954,Northern Metropolitan,4019.0
+Abbotsford,6/241 Nicholson St,1,u,300000.0,S,Biggin,8/10/2016,2.5,3067.0,1.0,1.0,1.0,0.0,,,Yarra,-37.8008,144.9973,Northern Metropolitan,4019.0
+Abbotsford,10 Valiant St,2,h,1097000.0,S,Biggin,8/10/2016,2.5,3067.0,3.0,1.0,2.0,220.0,75.0,1900.0,Yarra,-37.801,144.9989,Northern Metropolitan,4019.0
+Abbotsford,411/8 Grosvenor St,2,u,700000.0,VB,Jellis,12/11/2016,2.5,3067.0,2.0,2.0,1.0,0.0,,,Yarra,-37.811,145.0067,Northern Metropolitan,4019.0
+Abbotsford,40 Nicholson St,3,h,1350000.0,VB,Nelson,12/11/2016,2.5,3067.0,3.0,2.0,2.0,214.0,190.0,2005.0,Yarra,-37.8085,144.9964,Northern Metropolitan,4019.0
+Abbotsford,123/56 Nicholson St,2,u,750000.0,S,Biggin,12/11/2016,2.5,3067.0,2.0,2.0,1.0,0.0,94.0,2009.0,Yarra,-37.8078,144.9965,Northern Metropolitan,4019.0
+Abbotsford,45 William St,2,h,1172500.0,S,Biggin,13/08/2016,2.5,3067.0,2.0,1.0,1.0,195.0,,,Yarra,-37.8084,144.9973,Northern Metropolitan,4019.0
+Abbotsford,7/20 Abbotsford St,1,u,441000.0,SP,Greg,14/05/2016,2.5,3067.0,1.0,1.0,1.0,0.0,,,Yarra,-37.8016,144.9988,Northern Metropolitan,4019.0
+Abbotsford,16 William St,2,h,1310000.0,S,Jellis,15/10/2016,2.5,3067.0,2.0,1.0,2.0,238.0,97.0,1890.0,Yarra,-37.809,144.9976,Northern Metropolitan,4019.0
+Abbotsford,42 Henry St,3,h,1200000.0,S,Jellis,16/07/2016,2.5,3067.0,3.0,2.0,1.0,113.0,110.0,1880.0,Yarra,-37.8056,144.993,Northern Metropolitan,4019.0
+Abbotsford,78 Yarra St,3,h,1176500.0,S,LITTLE,16/07/2016,2.5,3067.0,2.0,1.0,1.0,138.0,105.0,1890.0,Yarra,-37.8021,144.9965,Northern Metropolitan,4019.0
+Abbotsford,196 Nicholson St,3,h,955000.0,S,Collins,17/09/2016,2.5,3067.0,3.0,1.0,0.0,183.0,,,Yarra,-37.8022,144.9975,Northern Metropolitan,4019.0
+Abbotsford,42 Valiant St,2,h,890000.0,S,Biggin,17/09/2016,2.5,3067.0,2.0,1.0,1.0,150.0,73.0,1985.0,Yarra,-37.8011,145.0004,Northern Metropolitan,4019.0
+Abbotsford,3/72 Charles St,4,h,1330000.0,PI,Kay,18/03/2017,2.5,3067.0,4.0,2.0,2.0,780.0,135.0,1900.0,Yarra,-37.8073,144.9952,Northern Metropolitan,4019.0
+Abbotsford,13/11 Nicholson St,3,t,900000.0,S,Beller,18/03/2017,2.5,3067.0,3.0,2.0,2.0,0.0,,2010.0,Yarra,-37.8093,144.9959,Northern Metropolitan,4019.0
+Abbotsford,138/56 Nicholson St,3,u,1090000.0,S,Jellis,18/03/2017,2.5,3067.0,3.0,2.0,2.0,4290.0,27.0,,Yarra,-37.8078,144.9965,Northern Metropolitan,4019.0
+Abbotsford,6/219 Nicholson St,2,u,500000.0,S,Collins,18/06/2016,2.5,3067.0,2.0,1.0,1.0,0.0,60.0,1970.0,Yarra,-37.8015,144.9972,Northern Metropolitan,4019.0
+Abbotsford,52a William St,2,h,1100000.0,PI,Biggin,18/06/2016,2.5,3067.0,2.0,2.0,1.0,124.0,135.0,2013.0,Yarra,-37.8079,144.9977,Northern Metropolitan,4019.0
+Abbotsford,49 Park St,2,h,1315000.0,S,Marshall,19/11/2016,2.5,3067.0,2.0,1.0,0.0,147.0,85.0,1900.0,Yarra,-37.808,144.994,Northern Metropolitan,4019.0
+Abbotsford,5/20 Abbotsford St,1,u,426000.0,SP,Greg,22/08/2016,2.5,3067.0,1.0,1.0,1.0,0.0,,,Yarra,-37.8016,144.9988,Northern Metropolitan,4019.0
+Abbotsford,48 Abbotsford St,3,h,1447500.0,PI,Nelson,22/08/2016,2.5,3067.0,3.0,3.0,1.0,166.0,174.0,2012.0,Yarra,-37.8017,145.0001,Northern Metropolitan,4019.0
+Abbotsford,116/56 Nicholson St,1,u,457000.0,S,Jellis,22/08/2016,2.5,3067.0,1.0,1.0,1.0,0.0,50.0,,Yarra,-37.8078,144.9965,Northern Metropolitan,4019.0
+Abbotsford,159 Park St,2,h,1135000.0,S,Nelson,22/08/2016,2.5,3067.0,2.0,2.0,2.0,98.0,128.0,1920.0,Yarra,-37.8005,144.9952,Northern Metropolitan,4019.0
+Abbotsford,31 Turner St,4,h,1542000.0,S,Collins,24/09/2016,2.5,3067.0,4.0,3.0,1.0,0.0,,,Yarra,-37.7994,144.9965,Northern Metropolitan,4019.0
+Abbotsford,166 Gipps St,3,h,1290000.0,S,Biggin,25/02/2017,2.5,3067.0,3.0,2.0,2.0,147.0,18.0,,Yarra,-37.805,144.9943,Northern Metropolitan,4019.0
+Abbotsford,60 Stafford St,3,h,1290000.0,S,Biggin,25/02/2017,2.5,3067.0,3.0,1.0,1.0,168.0,124.0,1950.0,Yarra,-37.8007,144.9958,Northern Metropolitan,4019.0
+Abbotsford,11/205 Gipps St,1,u,470000.0,S,Nelson,26/07/2016,2.5,3067.0,1.0,1.0,1.0,0.0,50.0,2013.0,Yarra,-37.8055,144.9961,Northern Metropolitan,4019.0
+Abbotsford,47 Studley St,2,h,1180000.0,S,Jellis,27/11/2016,2.5,3067.0,2.0,1.0,0.0,162.0,91.0,1900.0,Yarra,-37.8016,144.9956,Northern Metropolitan,4019.0
+Abbotsford,45 Yarra St,3,h,1195000.0,SP,Jellis,27/11/2016,2.5,3067.0,3.0,2.0,1.0,120.0,128.0,1998.0,Yarra,-37.8022,144.9954,Northern Metropolitan,4019.0
+Abbotsford,200 Nicholson St,2,h,1012500.0,S,Nelson,28/05/2016,2.5,3067.0,2.0,1.0,0.0,182.0,82.0,1900.0,Yarra,-37.8021,144.9976,Northern Metropolitan,4019.0
+Abbotsford,27 Charles St,2,h,1030000.0,S,Biggin,30/07/2016,2.5,3067.0,2.0,1.0,1.0,172.0,81.0,1930.0,Yarra,-37.8086,144.9946,Northern Metropolitan,4019.0
+Airport West,154 Halsey Rd,3,t,840000.0,PI,Nelson,3/09/2016,13.5,3042.0,3.0,2.0,1.0,303.0,225.0,2016.0,Moonee Valley,-37.718,144.878,Western Metropolitan,3464.0
+Airport West,50 Bedford St,3,h,730000.0,VB,Nelson,3/12/2016,13.5,3042.0,3.0,2.0,1.0,0.0,145.0,1965.0,Moonee Valley,-37.7203,144.8755,Western Metropolitan,3464.0
+Airport West,50 Bedford St,3,h,770000.0,SP,Nelson,4/03/2017,13.5,3042.0,3.0,2.0,1.0,0.0,145.0,1965.0,Moonee Valley,-37.7203,144.8755,Western Metropolitan,3464.0
+Airport West,23 Hart St,2,h,603000.0,S,Nelson,4/03/2017,13.5,3042.0,2.0,1.0,1.0,272.0,84.0,1950.0,Moonee Valley,-37.7294,144.888,Western Metropolitan,3464.0
+Airport West,1/80 Hawker St,3,t,700000.0,S,Brad,4/03/2017,13.5,3042.0,3.0,2.0,2.0,239.0,134.0,2009.0,Moonee Valley,-37.7218,144.8837,Western Metropolitan,3464.0
+Airport West,1/37 Hillside Gr,3,h,600000.0,S,Maddison,4/03/2017,13.5,3042.0,2.0,1.0,1.0,290.0,116.0,1980.0,Moonee Valley,-37.7273,144.8744,Western Metropolitan,3464.0
+Airport West,2/49 McIntosh St,2,u,500000.0,VB,Barry,4/03/2017,13.5,3042.0,2.0,1.0,1.0,168.0,86.0,2011.0,Moonee Valley,-37.7215,144.8864,Western Metropolitan,3464.0
+Airport West,54 Marshall Rd,3,h,720000.0,S,Barry,6/08/2016,13.5,3042.0,2.0,1.0,1.0,620.0,,,Moonee Valley,-37.7173,144.8872,Western Metropolitan,3464.0
+Airport West,36 Roberts Rd,4,h,785000.0,S,Considine,6/08/2016,13.5,3042.0,3.0,1.0,2.0,597.0,127.0,,Moonee Valley,-37.7259,144.8792,Western Metropolitan,3464.0
+Airport West,11 Harrington Rd,6,h,725000.0,SP,Barry,7/05/2016,13.5,3042.0,6.0,3.0,2.0,976.0,186.0,1980.0,Moonee Valley,-37.7239,144.8735,Western Metropolitan,3464.0
+Airport West,2/252 Parer Rd,2,t,450000.0,S,Barry,7/05/2016,13.5,3042.0,2.0,1.0,1.0,110.0,90.0,2015.0,Moonee Valley,-37.7216,144.871,Western Metropolitan,3464.0
+Airport West,3/19 Hart St,2,u,515000.0,S,Barry,7/11/2016,13.5,3042.0,2.0,1.0,1.0,141.0,73.0,2013.0,Moonee Valley,-37.7298,144.8883,Western Metropolitan,3464.0
+Airport West,2/62 Clydesdale Rd,2,u,530000.0,S,Nelson,10/09/2016,13.5,3042.0,2.0,1.0,1.0,120.0,94.0,2012.0,Moonee Valley,-37.7234,144.8792,Western Metropolitan,3464.0
+Airport West,3 Deidre Ct,3,h,895000.0,PI,Rendina,10/09/2016,13.5,3042.0,3.0,1.0,6.0,1063.0,133.0,1975.0,Moonee Valley,-37.7249,144.8728,Western Metropolitan,3464.0
+Airport West,13 Etzel St,3,h,805000.0,S,Nelson,10/12/2016,13.5,3042.0,3.0,1.0,1.0,0.0,105.0,1950.0,Moonee Valley,-37.7217,144.8783,Western Metropolitan,3464.0
+Airport West,1/43 Cameron St,3,u,752000.0,S,Nelson,11/02/2017,13.5,3042.0,3.0,1.0,1.0,265.0,130.0,1993.0,Moonee Valley,-37.7302,144.8855,Western Metropolitan,3464.0
+Airport West,145a Victory Rd,2,u,440000.0,S,Barry,13/08/2016,13.5,3042.0,2.0,1.0,1.0,192.0,,,Moonee Valley,-37.7177,144.8787,Western Metropolitan,3464.0
+Airport West,241 Parer Rd,5,h,755000.0,PI,Propertyau,14/05/2016,13.5,3042.0,3.0,2.0,2.0,596.0,,,Moonee Valley,-37.7248,144.8699,Western Metropolitan,3464.0
+Airport West,2/40 Earl St,3,t,700000.0,PI,Brad,15/10/2016,13.5,3042.0,3.0,2.0,2.0,165.0,133.0,2009.0,Moonee Valley,-37.727,144.887,Western Metropolitan,3464.0
+Airport West,180 Parer Rd,3,h,830000.0,S,Barry,16/04/2016,13.5,3042.0,3.0,1.0,2.0,971.0,113.0,1960.0,Moonee Valley,-37.7186,144.876,Western Metropolitan,3464.0
+Airport West,4/54 Hawker St,2,u,462500.0,S,Barry,16/07/2016,13.5,3042.0,2.0,1.0,1.0,164.0,,2003.0,Moonee Valley,-37.7218,144.8863,Western Metropolitan,3464.0
+Airport West,43 Hillside Gr,3,h,670000.0,SP,Barry,16/07/2016,13.5,3042.0,3.0,2.0,2.0,657.0,,,Moonee Valley,-37.7269,144.8742,Western Metropolitan,3464.0
+Airport West,174 Parer Rd,2,h,675000.0,S,Barry,16/07/2016,13.5,3042.0,2.0,1.0,1.0,612.0,100.0,1975.0,Moonee Valley,-37.7187,144.8765,Western Metropolitan,3464.0
+Airport West,138 Victory Rd,3,h,1042000.0,S,Nelson,16/07/2016,13.5,3042.0,3.0,2.0,5.0,612.0,174.0,1950.0,Moonee Valley,-37.7173,144.8796,Western Metropolitan,3464.0
+Airport West,75 King St,3,h,910000.0,S,McDonald,17/09/2016,13.5,3042.0,3.0,1.0,1.0,775.0,,,Moonee Valley,-37.7231,144.8835,Western Metropolitan,3464.0
+Airport West,6 Kittyhawk St,4,h,773000.0,S,Brad,17/09/2016,13.5,3042.0,5.0,3.0,4.0,531.0,309.0,1980.0,Moonee Valley,-37.7263,144.8679,Western Metropolitan,3464.0
+Airport West,478 Fullarton Rd,3,h,810000.0,PI,Barry,18/03/2017,13.5,3042.0,3.0,3.0,2.0,555.0,192.0,1980.0,Moonee Valley,-37.7285,144.8694,Western Metropolitan,3464.0
+Airport West,144 Marshall Rd,3,h,715000.0,S,Rendina,18/03/2017,13.5,3042.0,3.0,2.0,2.0,422.0,126.0,1995.0,Moonee Valley,-37.7164,144.8792,Western Metropolitan,3464.0
+Airport West,106 Parer Rd,3,h,790000.0,S,Nelson,18/03/2017,13.5,3042.0,3.0,1.0,3.0,614.0,,,Moonee Valley,-37.7194,144.8827,Western Metropolitan,3464.0
+Airport West,3/7 South Rd,3,t,540000.0,SP,Nelson,18/06/2016,13.5,3042.0,2.0,2.0,1.0,161.0,101.0,2010.0,Moonee Valley,-37.7231,144.8802,Western Metropolitan,3464.0
+Airport West,37 North St,3,t,825000.0,SP,Barry,19/11/2016,13.5,3042.0,3.0,2.0,1.0,293.0,102.0,1960.0,Moonee Valley,-37.72,144.8776,Western Metropolitan,3464.0
+Airport West,10 Hilbert Rd,3,h,685000.0,S,Barry,22/05/2016,13.5,3042.0,3.0,1.0,1.0,579.0,113.0,1975.0,Moonee Valley,-37.7226,144.8733,Western Metropolitan,3464.0
+Airport West,110 Halsey Rd,3,h,805000.0,S,Barry,22/08/2016,13.5,3042.0,3.0,1.0,1.0,623.0,,,Moonee Valley,-37.7184,144.882,Western Metropolitan,3464.0
+Airport West,2/13 North St,2,u,510000.0,S,Nelson,22/08/2016,13.5,3042.0,2.0,1.0,1.0,141.0,76.0,,Moonee Valley,-37.7202,144.8797,Western Metropolitan,3464.0
+Airport West,105a Victory Rd,3,h,612000.0,S,Nelson,22/08/2016,13.5,3042.0,3.0,2.0,1.0,212.0,,,Moonee Valley,-37.7181,144.8824,Western Metropolitan,3464.0
+Airport West,117 Marshall Rd,3,h,662000.0,S,Brad,23/04/2016,13.5,3042.0,3.0,1.0,2.0,612.0,,,Moonee Valley,-37.7169,144.8815,Western Metropolitan,3464.0
+Airport West,34 Moorna Dr,4,h,978000.0,S,Nelson,24/09/2016,13.5,3042.0,4.0,3.0,2.0,532.0,,,Moonee Valley,-37.7263,144.869,Western Metropolitan,3464.0
+Airport West,33 North St,3,h,720000.0,PI,Nelson,25/02/2017,13.5,3042.0,3.0,1.0,1.0,585.0,,,Moonee Valley,-37.72,144.878,Western Metropolitan,3464.0
+Airport West,49 Roberts Rd,4,h,765000.0,S,Prof.,27/11/2016,13.5,3042.0,4.0,1.0,2.0,509.0,,,Moonee Valley,-37.7261,144.8785,Western Metropolitan,3464.0
+Airport West,85 Roberts Rd,4,h,900000.0,S,Harcourts,27/11/2016,13.5,3042.0,4.0,2.0,3.0,628.0,146.0,1975.0,Moonee Valley,-37.7256,144.8739,Western Metropolitan,3464.0
+Albert Park,105 Kerferd Rd,2,h,1275000.0,S,hockingstuart,3/09/2016,3.3,3206.0,2.0,1.0,0.0,120.0,82.0,1900.0,Port Phillip,-37.8459,144.9555,Southern Metropolitan,3280.0
+Albert Park,85 Richardson St,2,h,1455000.0,S,Thomson,3/09/2016,3.3,3206.0,2.0,1.0,0.0,159.0,,,Port Phillip,-37.845,144.9538,Southern Metropolitan,3280.0
+Albert Park,112 Beaconsfield Pde,3,h,2850000.0,PI,Buxton,4/03/2017,3.3,3206.0,3.0,2.0,0.0,211.0,198.0,1890.0,Port Phillip,-37.8481,144.9499,Southern Metropolitan,3280.0
+Albert Park,94 Graham St,3,h,1850000.0,S,Greg,4/03/2017,3.3,3206.0,3.0,2.0,0.0,128.0,133.0,1890.0,Port Phillip,-37.8452,144.9488,Southern Metropolitan,3280.0
+Albert Park,396 Montague St,2,h,1436000.0,S,RT,4/03/2017,3.3,3206.0,2.0,1.0,0.0,130.0,81.0,1900.0,Port Phillip,-37.8431,144.9565,Southern Metropolitan,3280.0
+Albert Park,75 Graham St,2,h,1110000.0,S,Marshall,6/08/2016,3.3,3206.0,1.0,1.0,0.0,147.0,,1900.0,Port Phillip,-37.8444,144.9484,Southern Metropolitan,3280.0
+Albert Park,54 Brooke St,2,h,1550000.0,S,Sotheby's,7/05/2016,3.3,3206.0,2.0,1.0,1.0,167.0,,,Port Phillip,-37.8405,144.9521,Southern Metropolitan,3280.0
+Albert Park,104 Richardson St,4,h,2300000.0,S,Marshall,7/05/2016,3.3,3206.0,4.0,2.0,1.0,153.0,180.0,1880.0,Port Phillip,-37.8447,144.9523,Southern Metropolitan,3280.0
+Albert Park,4a Mills St,3,t,1550000.0,VB,Marshall,7/11/2016,3.3,3206.0,3.0,2.0,2.0,718.0,,,Port Phillip,-37.8443,144.9598,Southern Metropolitan,3280.0
+Albert Park,1 Moubray St,3,h,1800000.0,VB,Greg,7/11/2016,3.3,3206.0,3.0,2.0,1.0,132.0,159.0,1996.0,Port Phillip,-37.8415,144.952,Southern Metropolitan,3280.0
+Albert Park,29 Faussett St,2,h,2120000.0,S,Greg,10/09/2016,3.3,3206.0,2.0,1.0,1.0,199.0,107.0,1900.0,Port Phillip,-37.8422,144.9554,Southern Metropolitan,3280.0
+Albert Park,3 Herbert St,3,h,1800000.0,VB,Cayzer,10/09/2016,3.3,3206.0,3.0,1.0,1.0,253.0,,,Port Phillip,-37.8443,144.9579,Southern Metropolitan,3280.0
+Albert Park,24 Kerferd Pl,3,h,1800000.0,S,Marshall,10/09/2016,3.3,3206.0,3.0,2.0,1.0,90.0,122.0,1900.0,Port Phillip,-37.8421,144.9571,Southern Metropolitan,3280.0
+Albert Park,44 Draper St,2,h,1810000.0,PI,Greg,10/12/2016,3.3,3206.0,2.0,1.0,0.0,240.0,,,Port Phillip,-37.8379,144.9539,Southern Metropolitan,3280.0
+Albert Park,2 Dundas Pl,3,h,2615000.0,S,Cayzer,10/12/2016,3.3,3206.0,3.0,2.0,1.0,177.0,181.0,1880.0,Port Phillip,-37.8415,144.9585,Southern Metropolitan,3280.0
+Albert Park,23 Finlay St,5,h,2100000.0,S,Greg,10/12/2016,3.3,3206.0,5.0,2.0,1.0,237.0,,,Port Phillip,-37.8436,144.9557,Southern Metropolitan,3280.0
+Albert Park,31 Richardson St,3,h,1300000.0,S,hockingstuart,10/12/2016,3.3,3206.0,3.0,1.0,0.0,129.0,,,Port Phillip,-37.8422,144.94899999999996,Southern Metropolitan,3280.0
+Albert Park,4a Gatehouse La,3,h,1370000.0,S,Greg,12/06/2016,3.3,3206.0,3.0,2.0,2.0,0.0,85.0,2000.0,Port Phillip,-37.8451,144.9511,Southern Metropolitan,3280.0
+Albert Park,60 Brooke St,2,h,1000000.0,S,Cayzer,12/11/2016,3.3,3206.0,2.0,1.0,0.0,288.0,,,Port Phillip,-37.8407,144.9523,Southern Metropolitan,3280.0
+Albert Park,70 Barrett St,3,h,2575000.0,S,Greg,15/10/2016,3.3,3206.0,3.0,2.0,1.0,228.0,,,Port Phillip,-37.8445,144.9501,Southern Metropolitan,3280.0
+Albert Park,65 Graham St,2,h,1322500.0,S,Greg,15/10/2016,3.3,3206.0,2.0,1.0,0.0,149.0,98.0,1890.0,Port Phillip,-37.8443,144.9481,Southern Metropolitan,3280.0
