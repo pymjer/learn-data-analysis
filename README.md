@@ -125,3 +125,7 @@ for i in range(0,len(earthquakes)):
         radius=earthquakes.iloc[i]['Magnitude']**5.5,
         color=color_producer(earthquakes.iloc[i]['Magnitude'])).add_to(m_4)
 ```
+
+## 位置
+火锅店与奶茶店
+医院与煲汤店
