@@ -3,7 +3,7 @@
 ## 工具库
 安装包
 ```sh
-
+pip install geopy
 conda install -c conda-forge geopandas
 ```
 ```python
