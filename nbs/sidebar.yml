@@ -3,5 +3,5 @@ website:
     contents:
       - index.ipynb
       - 00_core.ipynb
-      - 01_numpy_demo.ipynb
       - 01_part1_core_pandas.ipynb
+      - 01_part2_applied_pandas.ipynb
