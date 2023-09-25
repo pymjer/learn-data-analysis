@@ -1,1 +1,0 @@
-Sitemap: https://pymjer.github.io/learn-data-analysis/sitemap.xml

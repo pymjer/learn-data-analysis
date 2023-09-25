@@ -1,9 +1,0 @@
-project:
-  output-dir: _docs
-
-website:
-  title: "learn-data-analysis"
-  site-url: "https://pymjer.github.io/learn-data-analysis"
-  description: "learn data analysis"
-  repo-branch: main
-  repo-url: "https://github.com/pymjer/learn-data-analysis"
