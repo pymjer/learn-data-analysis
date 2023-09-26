@@ -1,7 +1,13 @@
 website:
   sidebar:
     contents:
-      - index.ipynb
       - 00_core.ipynb
-      - 01_part1_core_pandas.ipynb
-      - 01_part2_applied_pandas.ipynb
+      - section: Pandas
+        contents:
+          - pandas/index.qmd
+          - pandas/01_part1_core_pandas.ipynb
+          - pandas/01_part2_applied_pandas.ipynb
+          - pandas/01_part3_func_pandas.ipynb
+      - 04_matplot_demo.ipynb
+      - 05_seaborn_demo.ipynb
+      - 08_fastai_core.ipynb

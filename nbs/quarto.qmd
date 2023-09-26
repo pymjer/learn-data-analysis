@@ -1,0 +1,72 @@
+---
+title: "Quarto Basics"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+# YAML Options
+代码折叠选项
+```
+format: 
+  html:
+    code-fold: false
+```
+更多配置参见: [Quarto Guide](https://quarto.org/docs/guide/)
+
+# Code Cells
+代码格包含可执行的代码和对应的输出：
+
+For a demonstration of a line plot on a polar axis, see @fig-polar.
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+#| fig-alt: "line plot"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 4 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+::: {.callout-note}
+上面的单元格包含两个选项`label`和`fig-cap`. 单元格选项使用YAML格式编写，并且带有特殊的前缀`#|`.
+:::
+# Callouts
+Callouts标志是一种引起人们对某种概念额外关注的方式，配置如下：
+```
+::: {.callout-note}
+Note that there are five types of callouts, including:
+`note`, `tip`, `warning`, `caution`, and `important`.
+:::
+```
+# Article Layout
+Quato文字的默认宽度是700像素。 可以使用`column: screen-inset`选项来表示我们希望图像占据整个屏幕的宽带。
+
+```{python}
+#| code-fold: true
+#| column: screen-inset
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, axs = plt.subplots(2, 2)
+fig.set_size_inches(20, 8)
+cmaps = ['RdBu_r', 'viridis']
+for col in range(2):
+    for row in range(2):
+        ax = axs[row, col]
+        pcm = ax.pcolormesh(
+          np.random.random((20, 20)) * (col + 1),
+          cmap=cmaps[col]
+        )
+        fig.colorbar(pcm, ax=ax)
+plt.show()
+```
