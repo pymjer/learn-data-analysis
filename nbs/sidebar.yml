@@ -11,4 +11,5 @@ website:
       - 04_matplot_demo.ipynb
       - 05_seaborn_demo.ipynb
       - 06_plotly_demo.ipynb
+      - 07_sklearn_demo.ipynb
       - 08_fastai_core.ipynb
