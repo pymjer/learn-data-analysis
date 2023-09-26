@@ -17,8 +17,6 @@ website:
     left:
       - text: "Overview"
         file: index.ipynb
-      - text: "Quarto"
-        file: quarto.qmd
       - text: "More"
         menu: 
           - walkthrough.qmd
