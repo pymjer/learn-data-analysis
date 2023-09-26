@@ -17,9 +17,6 @@ website:
     left:
       - text: "Overview"
         file: index.ipynb
-      - text: "More"
-        menu: 
-          - walkthrough.qmd
     right:
       - icon: github
         href: https://github.com/pymjer/learn-data-analysis
