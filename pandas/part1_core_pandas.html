@@ -1,0 +1,3644 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Pandas 核心函数">
+
+<title>learn-data-analysis - Pandas Part1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="learn-data-analysis - Pandas Part1">
+<meta property="og:description" content="Pandas 核心函数">
+<meta property="og:site-name" content="learn-data-analysis">
+<meta name="twitter:title" content="learn-data-analysis - Pandas Part1">
+<meta name="twitter:description" content="Pandas 核心函数">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">learn-data-analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Overview</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pymjer/learn-data-analysis" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../pandas/index.html">Pandas</a></li><li class="breadcrumb-item"><a href="../pandas/part1_core_pandas.html">Pandas Part1</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Pandas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pandas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Index</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pandas/part1_core_pandas.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Pandas Part1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pandas/part2_applied_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pandas/part3_func_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../matplot_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matplot</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../seaborn_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seaborn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../plotly_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plotly</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sklearn_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scikit-Learn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pytorch_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PyTorch</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../fastai_core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fastai Core</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#pyspark-vs-pandas-vs-numpy" id="toc-pyspark-vs-pandas-vs-numpy" class="nav-link active" data-scroll-target="#pyspark-vs-pandas-vs-numpy">PySpark vs Pandas vs Numpy</a>
+  <ul class="collapse">
+  <li><a href="#导入库" id="toc-导入库" class="nav-link" data-scroll-target="#导入库">导入库</a></li>
+  </ul></li>
+  <li><a href="#创建数据" id="toc-创建数据" class="nav-link" data-scroll-target="#创建数据">创建数据</a>
+  <ul class="collapse">
+  <li><a href="#series-数据" id="toc-series-数据" class="nav-link" data-scroll-target="#series-数据">Series 数据</a></li>
+  <li><a href="#dataframe数据" id="toc-dataframe数据" class="nav-link" data-scroll-target="#dataframe数据">DataFrame数据</a></li>
+  </ul></li>
+  <li><a href="#转换数据" id="toc-转换数据" class="nav-link" data-scroll-target="#转换数据">转换数据</a></li>
+  <li><a href="#数据选择" id="toc-数据选择" class="nav-link" data-scroll-target="#数据选择">数据选择</a>
+  <ul class="collapse">
+  <li><a href="#根据正则匹配" id="toc-根据正则匹配" class="nav-link" data-scroll-target="#根据正则匹配">根据正则匹配</a></li>
+  <li><a href="#返回指定列数据" id="toc-返回指定列数据" class="nav-link" data-scroll-target="#返回指定列数据">返回指定列数据</a></li>
+  <li><a href="#根据label获取数据" id="toc-根据label获取数据" class="nav-link" data-scroll-target="#根据label获取数据">根据label获取数据</a></li>
+  <li><a href="#iloc-根据位置获取数据" id="toc-iloc-根据位置获取数据" class="nav-link" data-scroll-target="#iloc-根据位置获取数据">iloc 根据位置获取数据</a></li>
+  </ul></li>
+  <li><a href="#boolean索引" id="toc-boolean索引" class="nav-link" data-scroll-target="#boolean索引">Boolean索引</a></li>
+  <li><a href="#日期处理" id="toc-日期处理" class="nav-link" data-scroll-target="#日期处理">日期处理</a></li>
+  <li><a href="#数据转换" id="toc-数据转换" class="nav-link" data-scroll-target="#数据转换">数据转换</a>
+  <ul class="collapse">
+  <li><a href="#替换值" id="toc-替换值" class="nav-link" data-scroll-target="#替换值">替换值</a></li>
+  </ul></li>
+  <li><a href="#数据缺失" id="toc-数据缺失" class="nav-link" data-scroll-target="#数据缺失">数据缺失</a>
+  <ul class="collapse">
+  <li><a href="#给空值赋值为平均值" id="toc-给空值赋值为平均值" class="nav-link" data-scroll-target="#给空值赋值为平均值">给空值赋值为平均值</a></li>
+  </ul></li>
+  <li><a href="#排序" id="toc-排序" class="nav-link" data-scroll-target="#排序">排序</a></li>
+  <li><a href="#索引" id="toc-索引" class="nav-link" data-scroll-target="#索引">索引</a>
+  <ul class="collapse">
+  <li><a href="#apply" id="toc-apply" class="nav-link" data-scroll-target="#apply">Apply</a></li>
+  </ul></li>
+  <li><a href="#pandas函数" id="toc-pandas函数" class="nav-link" data-scroll-target="#pandas函数">Pandas函数</a>
+  <ul class="collapse">
+  <li><a href="#数值与数值的相关性" id="toc-数值与数值的相关性" class="nav-link" data-scroll-target="#数值与数值的相关性">数值与数值的相关性</a></li>
+  <li><a href="#数值与分类的相关性" id="toc-数值与分类的相关性" class="nav-link" data-scroll-target="#数值与分类的相关性">数值与分类的相关性</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/pymjer/learn-data-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pandas Part1</h1>
+</div>
+
+<div>
+  <div class="description">
+    Pandas 核心函数
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="pyspark-vs-pandas-vs-numpy" class="level2">
+<h2 class="anchored" data-anchor-id="pyspark-vs-pandas-vs-numpy">PySpark vs Pandas vs Numpy</h2>
+<p>Pandas DataFrame是一个二维数组，底层使用Numpy和array存储，Numpy使用C语言编写，运行速度很快</p>
+<p>Spark和Pandas都可以集成SQL能力，但他们支持的SQL规范不一致，为了保持统一，需要做数据转换</p>
+<p>PySpark DataFram转Pandas DataFrame使用toPandas()方法</p>
+<p>Pandas DataFrame转PySpark DataFrame，使用sqlContext.createDataFrame(pdf)</p>
+<section id="导入库" class="level3">
+<h3 class="anchored" data-anchor-id="导入库">导入库</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="创建数据" class="level2">
+<h2 class="anchored" data-anchor-id="创建数据">创建数据</h2>
+<p>pandas支持创建单列数据 Series和多列数据 DataFrame</p>
+<section id="series-数据" class="level3">
+<h3 class="anchored" data-anchor-id="series-数据">Series 数据</h3>
+<p>Series数据是一维数据，Index可以是一个，也可以有多个</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">5</span>, np.nan, <span class="dv">6</span>, <span class="dv">8</span>])</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0    1.0
+1    3.0
+2    5.0
+3    NaN
+4    6.0
+5    8.0
+dtype: float64</code></pre>
+</div>
+</div>
+<p>使用boolean array过滤Series数据，应用数学函数</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s[s<span class="op">&lt;</span><span class="dv">5</span>])</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s<span class="op">*</span><span class="dv">2</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.exp(s))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0    1.0
+1    3.0
+dtype: float64
+0     2.0
+1     6.0
+2    10.0
+3     NaN
+4    12.0
+5    16.0
+dtype: float64
+0       2.718282
+1      20.085537
+2     148.413159
+3            NaN
+4     403.428793
+5    2980.957987
+dtype: float64</code></pre>
+</div>
+</div>
+<p>通过<code>values</code>和<code>index</code>属性，可以获取数组的值和索引对象</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="dv">3</span> <span class="kw">in</span> s)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s.values)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(s.index)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>True
+[ 1.  3.  5. nan  6.  8.]
+RangeIndex(start=0, stop=6, step=1)</code></pre>
+</div>
+</div>
+<p>可以重新指定index的指</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>s.index <span class="op">=</span> [<span class="st">'a'</span>,<span class="st">'b'</span>,<span class="st">'c'</span>,<span class="st">'d'</span>,<span class="st">'e'</span>,<span class="st">'f'</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>s</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>a    1.0
+b    3.0
+c    5.0
+d    NaN
+e    6.0
+f    8.0
+dtype: float64</code></pre>
+</div>
+</div>
+<p>可以把Series当做一个固定长度的、排序的字典, 可以传入一个dict来创建Series</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sdata <span class="op">=</span> {<span class="st">'Ohio'</span>: <span class="dv">35000</span>, <span class="st">'Texas'</span>: <span class="dv">71000</span>, <span class="st">'Oregon'</span>: <span class="dv">16000</span>, <span class="st">'Utah'</span>: <span class="dv">5000</span>}</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>obj3 <span class="op">=</span> pd.Series(sdata)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>obj3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Ohio      35000
+Texas     71000
+Oregon    16000
+Utah       5000
+dtype: int64</code></pre>
+</div>
+</div>
+<p>也可以指定自己的索引来获取指定的数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>states <span class="op">=</span> [<span class="st">'California'</span>, <span class="st">'Ohio'</span>, <span class="st">'Oregon'</span>, <span class="st">'Texas'</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>obj4 <span class="op">=</span> pd.Series(sdata, index<span class="op">=</span>states) <span class="co"># 只会获取索引在sdata中发现的数据</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>obj4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas         71000.0
+dtype: float64</code></pre>
+</div>
+</div>
+<p>查看空数据,可以使用pd的isnull方法，也可以直接调用seris的isnull方法</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pd.isnull(obj4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>California     True
+Ohio          False
+Oregon        False
+Texas         False
+dtype: bool</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>obj4.notnull()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>California    False
+Ohio           True
+Oregon         True
+Texas          True
+dtype: bool</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>obj3 <span class="op">+</span> obj4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>California         NaN
+Ohio           70000.0
+Oregon         32000.0
+Texas         142000.0
+Utah               NaN
+dtype: float64</code></pre>
+</div>
+</div>
+<p>Series对象和它的index对象都有一个name属性</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>obj4.name <span class="op">=</span> <span class="st">'population'</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>obj4.index.name <span class="op">=</span> <span class="st">'state'</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>obj4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>state
+California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas         71000.0
+Name: population, dtype: float64</code></pre>
+</div>
+</div>
+<p>创建Series的同时，可以指定index</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ingredients <span class="op">=</span> pd.Series([<span class="st">'4 cups'</span>, <span class="st">'1 cup'</span>, <span class="st">'2 large'</span>, <span class="st">'1 can'</span>], index<span class="op">=</span>[<span class="st">'Flour'</span>, <span class="st">'Milk'</span>, <span class="st">'Eggs'</span>, <span class="st">'Spam'</span>], name<span class="op">=</span><span class="st">'Dinner'</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>ingredients</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Flour     4 cups
+Milk       1 cup
+Eggs     2 large
+Spam       1 can
+Name: Dinner, dtype: object</code></pre>
+</div>
+</div>
+<p>使用index中的labels来访问一个值，或者一组值</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ingredients[<span class="st">'Flour'</span>])</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(ingredients[[<span class="st">'Flour'</span>,<span class="st">'Milk'</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>4 cups
+Flour    4 cups
+Milk      1 cup
+Name: Dinner, dtype: object</code></pre>
+</div>
+</div>
+<p>Series 和 DataFrame数据转换</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>data_list <span class="op">=</span> [((<span class="st">'一级科员'</span>, <span class="st">'0-20'</span>), <span class="dv">0</span>), ((<span class="st">'一级科员'</span>, <span class="st">'21-30'</span>), <span class="dv">14</span>), ((<span class="st">'一级科员'</span>, <span class="st">'31-40'</span>), <span class="dv">10</span>), </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>             ((<span class="st">'一级科员'</span>, <span class="st">'41-50'</span>), <span class="dv">5</span>), ((<span class="st">'一级科员'</span>, <span class="st">'51-60'</span>), <span class="dv">6</span>), ((<span class="st">'一级科员'</span>, <span class="st">'60+'</span>), <span class="dv">0</span>),</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>             ((<span class="st">'三级科员'</span>, <span class="st">'0-20'</span>), <span class="dv">0</span>), ((<span class="st">'三级科员'</span>, <span class="st">'21-30'</span>), <span class="dv">11</span>), ((<span class="st">'三级科员'</span>, <span class="st">'31-40'</span>), <span class="dv">8</span>)]</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.Series([x[<span class="dv">1</span>] <span class="cf">for</span> x <span class="kw">in</span> data_list], index<span class="op">=</span>[x[<span class="dv">0</span>] <span class="cf">for</span> x <span class="kw">in</span> data_list])</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(一级科员, 0-20)      0
+(一级科员, 21-30)    14
+(一级科员, 31-40)    10
+(一级科员, 41-50)     5
+(一级科员, 51-60)     6
+(一级科员, 60+)       0
+(三级科员, 0-20)      0
+(三级科员, 21-30)    11
+(三级科员, 31-40)     8
+dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data.reset_index() <span class="co"># 要将组合Index的Series转换成DataFrame，需要重置索引</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df.columns <span class="op">=</span> [<span class="st">'Combination'</span>, <span class="st">'Value'</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'Rank'</span>, <span class="st">'Age'</span>]] <span class="op">=</span> df[<span class="st">'Combination'</span>].<span class="bu">apply</span>(pd.Series) <span class="co"># 将组合列拆分成两列</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Combination</th>
+<th data-quarto-table-cell-role="th">Value</th>
+<th data-quarto-table-cell-role="th">Rank</th>
+<th data-quarto-table-cell-role="th">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>(一级科员, 0-20)</td>
+<td>0</td>
+<td>一级科员</td>
+<td>0-20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>(一级科员, 21-30)</td>
+<td>14</td>
+<td>一级科员</td>
+<td>21-30</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>(一级科员, 31-40)</td>
+<td>10</td>
+<td>一级科员</td>
+<td>31-40</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>(一级科员, 41-50)</td>
+<td>5</td>
+<td>一级科员</td>
+<td>41-50</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>(一级科员, 51-60)</td>
+<td>6</td>
+<td>一级科员</td>
+<td>51-60</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>(一级科员, 60+)</td>
+<td>0</td>
+<td>一级科员</td>
+<td>60+</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>(三级科员, 0-20)</td>
+<td>0</td>
+<td>三级科员</td>
+<td>0-20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>(三级科员, 21-30)</td>
+<td>11</td>
+<td>三级科员</td>
+<td>21-30</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>(三级科员, 31-40)</td>
+<td>8</td>
+<td>三级科员</td>
+<td>31-40</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>dtype('int64')</code></pre>
+</div>
+</div>
+</section>
+<section id="dataframe数据" class="level3">
+<h3 class="anchored" data-anchor-id="dataframe数据">DataFrame数据</h3>
+<p>通过传入一个Numpy数组来创建DataFrame，使用date_range来创建索引数据</p>
+<p>注意返回的数据里面有一个freq对象，这个表示时间类数据的频率，D表示日历日频率，常见的有： - B 工作日频率 - C 自定义工作日频率 - D 日历日频率 - W 周频率 - M 月末频率 - SM 半月结束频率 - BM 营业月结束频率</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(<span class="st">"20130101"</span>, periods<span class="op">=</span><span class="dv">6</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>dates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>DatetimeIndex(['2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04',
+               '2013-01-05', '2013-01-06'],
+              dtype='datetime64[ns]', freq='D')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(np.random.randn(<span class="dv">6</span>,<span class="dv">4</span>), index<span class="op">=</span>dates, columns<span class="op">=</span><span class="bu">list</span>(<span class="st">"ABCD"</span>))</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-01</td>
+<td>0.737109</td>
+<td>-1.512517</td>
+<td>-1.889726</td>
+<td>-0.903838</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-02</td>
+<td>1.012142</td>
+<td>2.329710</td>
+<td>0.269707</td>
+<td>0.569603</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-03</td>
+<td>0.071112</td>
+<td>-1.318172</td>
+<td>-0.582907</td>
+<td>0.134474</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-04</td>
+<td>0.562635</td>
+<td>-0.063299</td>
+<td>0.927822</td>
+<td>0.071969</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-05</td>
+<td>-0.595525</td>
+<td>1.406538</td>
+<td>0.419552</td>
+<td>0.038937</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-06</td>
+<td>-0.316271</td>
+<td>-0.015060</td>
+<td>1.235434</td>
+<td>0.041634</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>2013-01-01   -3.568972
+2013-01-02    4.181162
+2013-01-03   -1.695493
+2013-01-04    1.499127
+2013-01-05    1.269501
+2013-01-06    0.945737
+Freq: D, dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df.gt(<span class="dv">0</span>).<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>2013-01-01    1
+2013-01-02    4
+2013-01-03    2
+2013-01-04    3
+2013-01-05    3
+2013-01-06    2
+Freq: D, dtype: int64</code></pre>
+</div>
+</div>
+<p>查看数据情况(行数,列数)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>(6, 4)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>pro <span class="op">=</span> np.product(df.shape)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pro</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>24</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> [[<span class="st">'a'</span>, <span class="st">'1.2'</span>, <span class="st">'4.2'</span>], [<span class="st">'b'</span>, <span class="st">'70'</span>, <span class="st">'0.03'</span>], [<span class="st">'x'</span>, <span class="st">'5'</span>, <span class="st">'0'</span>]]</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(a, columns<span class="op">=</span>[<span class="st">'one'</span>, <span class="st">'two'</span>, <span class="st">'three'</span>])</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">one</th>
+<th data-quarto-table-cell-role="th">two</th>
+<th data-quarto-table-cell-role="th">three</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>1.2</td>
+<td>4.2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>b</td>
+<td>70</td>
+<td>0.03</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>x</td>
+<td>5</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>通过分隔字符串创建DataFrame</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用给定的示例数据</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> <span class="st">'''伍峰    三级科员    2000-10-8   2004-10-13  2006-10-13</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="st">何健  四级科员    1978-5-6    2018-6-13   2020-6-13</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="st">湛俊  二级科员    1967-9-20   2004-12-11  2008-12-11</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="st">柏强  二级科员    1975-7-15   2019-3-1    2022-3-1</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="st">孟俊  一级科员    1966-2-14   1992-10-10  1996-10-10'''</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame([x.split(<span class="st">'</span><span class="ch">\t</span><span class="st">'</span>) <span class="cf">for</span> x <span class="kw">in</span> data.split(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>)], columns<span class="op">=</span>[<span class="st">'name'</span>, <span class="st">'job'</span>, <span class="st">'birth_date'</span>, <span class="st">'entry_date'</span>, <span class="st">'last_promotion_date'</span>])</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">birth_date</th>
+<th data-quarto-table-cell-role="th">entry_date</th>
+<th data-quarto-table-cell-role="th">last_promotion_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>伍峰</td>
+<td>三级科员</td>
+<td>2000-10-8</td>
+<td>2004-10-13</td>
+<td>2006-10-13</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>何健</td>
+<td>四级科员</td>
+<td>1978-5-6</td>
+<td>2018-6-13</td>
+<td>2020-6-13</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>湛俊</td>
+<td>二级科员</td>
+<td>1967-9-20</td>
+<td>2004-12-11</td>
+<td>2008-12-11</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>柏强</td>
+<td>二级科员</td>
+<td>1975-7-15</td>
+<td>2019-3-1</td>
+<td>2022-3-1</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>孟俊</td>
+<td>一级科员</td>
+<td>1966-2-14</td>
+<td>1992-10-10</td>
+<td>1996-10-10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>通过传入字典对象来创建DataFrame</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>people <span class="op">=</span> pd.DataFrame({<span class="st">'Name'</span>:[<span class="st">'a'</span>,<span class="st">'b'</span>],<span class="st">'Age'</span>:[<span class="dv">18</span>, <span class="dv">22</span>]}, index<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>people</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Age</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>18</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>b</td>
+<td>22</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>loc <span class="op">=</span> pd.DataFrame({<span class="st">'Location'</span>:[<span class="st">'四川1'</span>,<span class="st">'重庆'</span>]}, index<span class="op">=</span>[<span class="dv">0</span>,<span class="dv">1</span>])</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="op">=</span> people.join(loc)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Age</th>
+<th data-quarto-table-cell-role="th">Location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>a</td>
+<td>18</td>
+<td>四川1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>b</td>
+<td>22</td>
+<td>重庆</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A"</span>: <span class="fl">1.0</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"B"</span>: pd.Timestamp(<span class="st">"20130102"</span>),</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C"</span>: pd.Series(<span class="dv">1</span>, index<span class="op">=</span><span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">4</span>)), dtype<span class="op">=</span><span class="st">"float32"</span>),</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"D"</span>: np.array([<span class="dv">3</span>]<span class="op">*</span><span class="dv">4</span>, dtype<span class="op">=</span><span class="st">"int32"</span>),</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"E"</span>: pd.Categorical([<span class="st">"test"</span>, <span class="st">"train"</span>, <span class="st">"test"</span>, <span class="st">"train"</span>]),</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"F"</span>: <span class="st">"foo"</span>,</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>df2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+<th data-quarto-table-cell-role="th">F</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>2013-01-02</td>
+<td>1.0</td>
+<td>3</td>
+<td>test</td>
+<td>foo</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>1.0</td>
+<td>2013-01-02</td>
+<td>1.0</td>
+<td>3</td>
+<td>train</td>
+<td>foo</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>1.0</td>
+<td>2013-01-02</td>
+<td>1.0</td>
+<td>3</td>
+<td>test</td>
+<td>foo</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1.0</td>
+<td>2013-01-02</td>
+<td>1.0</td>
+<td>3</td>
+<td>train</td>
+<td>foo</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>df2.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>A           float64
+B    datetime64[ns]
+C           float32
+D             int32
+E          category
+F            object
+dtype: object</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>df2.index</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Index([0, 1, 2, 3], dtype='int64')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>df.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">birth_date</th>
+<th data-quarto-table-cell-role="th">entry_date</th>
+<th data-quarto-table-cell-role="th">last_promotion_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">count</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">unique</td>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">top</td>
+<td>伍峰</td>
+<td>二级科员</td>
+<td>2000-10-8</td>
+<td>2004-10-13</td>
+<td>2006-10-13</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">freq</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>转置数据,行列颠倒</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df.T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+<th data-quarto-table-cell-role="th">2</th>
+<th data-quarto-table-cell-role="th">3</th>
+<th data-quarto-table-cell-role="th">4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">name</td>
+<td>伍峰</td>
+<td>何健</td>
+<td>湛俊</td>
+<td>柏强</td>
+<td>孟俊</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">job</td>
+<td>三级科员</td>
+<td>四级科员</td>
+<td>二级科员</td>
+<td>二级科员</td>
+<td>一级科员</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">birth_date</td>
+<td>2000-10-8</td>
+<td>1978-5-6</td>
+<td>1967-9-20</td>
+<td>1975-7-15</td>
+<td>1966-2-14</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">entry_date</td>
+<td>2004-10-13</td>
+<td>2018-6-13</td>
+<td>2004-12-11</td>
+<td>2019-3-1</td>
+<td>1992-10-10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">last_promotion_date</td>
+<td>2006-10-13</td>
+<td>2020-6-13</td>
+<td>2008-12-11</td>
+<td>2022-3-1</td>
+<td>1996-10-10</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>对列进行排序</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>df.sort_index(axis<span class="op">=</span><span class="dv">1</span>, ascending<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">name</th>
+<th data-quarto-table-cell-role="th">last_promotion_date</th>
+<th data-quarto-table-cell-role="th">job</th>
+<th data-quarto-table-cell-role="th">entry_date</th>
+<th data-quarto-table-cell-role="th">birth_date</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>伍峰</td>
+<td>2006-10-13</td>
+<td>三级科员</td>
+<td>2004-10-13</td>
+<td>2000-10-8</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>何健</td>
+<td>2020-6-13</td>
+<td>四级科员</td>
+<td>2018-6-13</td>
+<td>1978-5-6</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>湛俊</td>
+<td>2008-12-11</td>
+<td>二级科员</td>
+<td>2004-12-11</td>
+<td>1967-9-20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>柏强</td>
+<td>2022-3-1</td>
+<td>二级科员</td>
+<td>2019-3-1</td>
+<td>1975-7-15</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>孟俊</td>
+<td>1996-10-10</td>
+<td>一级科员</td>
+<td>1992-10-10</td>
+<td>1966-2-14</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>对值排序</p>
+<p>删除数据, 在删除时可以指定axis, axis=0是按行删除,axis=1是按列删除</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建一个包含五行的 DataFrame</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">'A'</span>: [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>], <span class="st">'B'</span>: [<span class="st">'a'</span>, pd.NA, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>], <span class="st">'C'</span>: [<span class="va">True</span>,<span class="va">True</span>,<span class="va">True</span>,<span class="va">True</span>,<span class="va">False</span>], <span class="st">'D'</span>: [<span class="fl">1.1</span>, <span class="fl">2.3</span>, pd.NA, <span class="fl">4.5</span>, <span class="fl">5.6</span>]}</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>a</td>
+<td>True</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>&lt;NA&gt;</td>
+<td>True</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>c</td>
+<td>True</td>
+<td>&lt;NA&gt;</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>d</td>
+<td>True</td>
+<td>4.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>e</td>
+<td>False</td>
+<td>5.6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 删除第三行</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>drop_row_df <span class="op">=</span> df.drop(<span class="dv">2</span>)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>drop_row_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>a</td>
+<td>True</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>&lt;NA&gt;</td>
+<td>True</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>d</td>
+<td>True</td>
+<td>4.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>e</td>
+<td>False</td>
+<td>5.6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 删除空行</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>drop_null_row <span class="op">=</span> df.dropna(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>drop_null_row</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>a</td>
+<td>True</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>d</td>
+<td>True</td>
+<td>4.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>e</td>
+<td>False</td>
+<td>5.6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 只删除指定的，包含空列的行</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>drop_specified_row <span class="op">=</span> df.dropna(axis<span class="op">=</span><span class="dv">0</span>, subset<span class="op">=</span>[<span class="st">'B'</span>])</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>drop_specified_row</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>a</td>
+<td>True</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>c</td>
+<td>True</td>
+<td>&lt;NA&gt;</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>d</td>
+<td>True</td>
+<td>4.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>e</td>
+<td>False</td>
+<td>5.6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 删除空列</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>drop_null_col <span class="op">=</span> df.dropna(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>drop_null_col</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">C</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>3</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 直接修改原数据</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>df.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">B</th>
+<th data-quarto-table-cell-role="th">C</th>
+<th data-quarto-table-cell-role="th">D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1</td>
+<td>a</td>
+<td>True</td>
+<td>1.1</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>4</td>
+<td>d</td>
+<td>True</td>
+<td>4.5</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>5</td>
+<td>e</td>
+<td>False</td>
+<td>5.6</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="转换数据" class="level2">
+<h2 class="anchored" data-anchor-id="转换数据">转换数据</h2>
+<p>使用pivot将行转换为列, 使用mellt将数据从列转换为行</p>
+<p>pivot()方法可以接受以下参数：</p>
+<ul>
+<li>index：用作新DataFrame的行索引的列名或列名列表。</li>
+<li>columns：用作新DataFrame的列索引的列名或列名列表。</li>
+<li>values：用于填充新DataFrame的列的列名或列名列表。如果未指定，则使用所有其他列。</li>
+<li>aggfunc：用于聚合重复值的函数，例如“sum”或“mean”。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Name'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>, <span class="st">'David'</span>, <span class="st">'Emily'</span>],</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Year'</span>: [<span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2017</span>, <span class="dv">2018</span>],</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Salary'</span>: [<span class="dv">50000</span>, <span class="dv">55000</span>, <span class="dv">60000</span>, <span class="dv">65000</span>, <span class="dv">70000</span>]</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'index:'</span>, df.index)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'columns:'</span>,df.columns)</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>index: RangeIndex(start=0, stop=5, step=1)
+columns: Index(['Name', 'Year', 'Salary'], dtype='object')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alice</td>
+<td>2016</td>
+<td>50000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>2016</td>
+<td>55000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Charlie</td>
+<td>2017</td>
+<td>60000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>David</td>
+<td>2017</td>
+<td>65000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Emily</td>
+<td>2018</td>
+<td>70000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>pivot_df <span class="op">=</span> df.pivot(index<span class="op">=</span><span class="st">'Year'</span>, columns<span class="op">=</span><span class="st">'Name'</span>, values<span class="op">=</span><span class="st">'Salary'</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'index:'</span>, pivot_df.index)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'columns:'</span>,pivot_df.columns)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>pivot_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>index: Index([2016, 2017, 2018], dtype='int64', name='Year')
+columns: Index(['Alice', 'Bob', 'Charlie', 'David', 'Emily'], dtype='object', name='Name')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Alice</th>
+<th data-quarto-table-cell-role="th">Bob</th>
+<th data-quarto-table-cell-role="th">Charlie</th>
+<th data-quarto-table-cell-role="th">David</th>
+<th data-quarto-table-cell-role="th">Emily</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2016</td>
+<td>50000.0</td>
+<td>55000.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2017</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>60000.0</td>
+<td>65000.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2018</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>70000.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>reset_df <span class="op">=</span> pivot_df.reset_index()</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>reset_df.index.name<span class="op">=</span><span class="st">'AutoRangeIndex'</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'index:'</span>, reset_df.index)</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'columns:'</span>,reset_df.columns)</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>reset_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>index: RangeIndex(start=0, stop=3, step=1, name='AutoRangeIndex')
+columns: Index(['Year', 'Alice', 'Bob', 'Charlie', 'David', 'Emily'], dtype='object', name='Name')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Alice</th>
+<th data-quarto-table-cell-role="th">Bob</th>
+<th data-quarto-table-cell-role="th">Charlie</th>
+<th data-quarto-table-cell-role="th">David</th>
+<th data-quarto-table-cell-role="th">Emily</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">AutoRangeIndex</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2016</td>
+<td>50000.0</td>
+<td>55000.0</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2017</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>60000.0</td>
+<td>65000.0</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2018</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>70000.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>melt_df <span class="op">=</span> reset_df.melt(id_vars<span class="op">=</span><span class="st">'Year'</span>, var_name<span class="op">=</span><span class="st">'Name1'</span>, value_name<span class="op">=</span><span class="st">'Salary'</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'index:'</span>, melt_df.index)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'columns:'</span>,melt_df.columns)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>melt_df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>index: RangeIndex(start=0, stop=15, step=1)
+columns: Index(['Year', 'Name1', 'Salary'], dtype='object')</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Name1</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2016</td>
+<td>Alice</td>
+<td>50000.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2017</td>
+<td>Alice</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2018</td>
+<td>Alice</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2016</td>
+<td>Bob</td>
+<td>55000.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2017</td>
+<td>Bob</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>转换指定的列</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Name'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>, <span class="st">'David'</span>, <span class="st">'Emily'</span>],</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Year'</span>: [<span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2017</span>, <span class="dv">2018</span>],</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Salary'</span>: [<span class="dv">50000</span>, <span class="dv">55000</span>, <span class="dv">60000</span>, <span class="dv">65000</span>, <span class="dv">70000</span>],</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Bonus'</span>: [<span class="dv">1000</span>, <span class="dv">2000</span>, <span class="dv">3000</span>, <span class="dv">4000</span>, <span class="dv">5000</span>]</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>melt_df <span class="op">=</span> df.melt(id_vars<span class="op">=</span>[<span class="st">'Name'</span>, <span class="st">'Year'</span>], value_vars<span class="op">=</span>[<span class="st">'Salary'</span>], var_name<span class="op">=</span><span class="st">'Metric'</span>, value_name<span class="op">=</span><span class="st">'Amount'</span>)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>melt_df.head(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Metric</th>
+<th data-quarto-table-cell-role="th">Amount</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alice</td>
+<td>2016</td>
+<td>Salary</td>
+<td>50000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>2016</td>
+<td>Salary</td>
+<td>55000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Charlie</td>
+<td>2017</td>
+<td>Salary</td>
+<td>60000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>David</td>
+<td>2017</td>
+<td>Salary</td>
+<td>65000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Emily</td>
+<td>2018</td>
+<td>Salary</td>
+<td>70000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="数据选择" class="level2">
+<h2 class="anchored" data-anchor-id="数据选择">数据选择</h2>
+<p>使用布尔索引和使用 <code>loc</code> 方法都可以根据条件获取行，但它们在内存占用方面有一些区别。</p>
+<ol type="1">
+<li>布尔索引：使用布尔索引可以直接筛选出满足条件的行，返回一个新的 DataFrame，其中只包含符合条件的行。这种方法不会复制原始数据，因此在内存占用方面相对较小。它是一种有效的方法，特别适用于大型数据集。</li>
+</ol>
+<div class="sourceCode" id="cb70"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 示例条件：获取 'column_name' 列值大于 10 的行</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>condition <span class="op">=</span> df[<span class="st">'column_name'</span>] <span class="op">&gt;</span> <span class="dv">10</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[condition]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li><code>loc</code> 方法：<code>loc</code> 方法可以根据标签进行行选择，并返回一个新的 DataFrame。它复制了满足条件的行的数据，因此在内存占用方面可能比布尔索引稍微更大一些。如果数据集非常大，复制所有行的数据可能会占用更多内存。</li>
+</ol>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 示例条件：获取 'column_name' 列值大于 10 的行</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df.loc[df[<span class="st">'column_name'</span>] <span class="op">&gt;</span> <span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>总体而言，在大多数情况下，布尔索引会占用较少的内存，因为它直接从原始数据中选择和过滤行，而不复制数据。但是，如果你的数据集相对较小，使用 <code>loc</code> 方法也是一种方便和直观的方法，不会产生明显的内存问题。</p>
+<p>在选择方法时，请考虑数据集的大小、内存限制以及性能需求，并选择最适合你的具体情况的方法。</p>
+<p>选择单列，返回一个Series</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Name'</span>: [<span class="st">'Alice'</span>, <span class="st">'Bob'</span>, <span class="st">'Charlie'</span>, <span class="st">'David'</span>, <span class="st">'Emily'</span>],</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Year'</span>: [<span class="dv">2016</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2017</span>, <span class="dv">2018</span>],</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Salary'</span>: [<span class="dv">50000</span>, <span class="dv">55000</span>, <span class="dv">60000</span>, <span class="dv">65000</span>, <span class="dv">70000</span>],</span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Bonus'</span>: [<span class="dv">1000</span>, <span class="dv">2000</span>, <span class="dv">3000</span>, <span class="dv">4000</span>, <span class="dv">5000</span>]</span>
+<span id="cb72-8"><a href="#cb72-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb72-9"><a href="#cb72-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-10"><a href="#cb72-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+<th data-quarto-table-cell-role="th">Bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alice</td>
+<td>2016</td>
+<td>50000</td>
+<td>1000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>2016</td>
+<td>55000</td>
+<td>2000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Charlie</td>
+<td>2017</td>
+<td>60000</td>
+<td>3000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>David</td>
+<td>2017</td>
+<td>65000</td>
+<td>4000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Emily</td>
+<td>2018</td>
+<td>70000</td>
+<td>5000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ol type="1">
+<li>如果要更改原始数据，请使用单一赋值操作（loc）：</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Year'</span>] <span class="op">==</span> <span class="dv">2016</span>, <span class="st">'Salary'</span>] <span class="op">=</span> <span class="dv">200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>如果想要一个副本，请确保强制让 Pandas 创建副本：</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>df_2016 <span class="op">=</span> df.loc[df[<span class="st">'Year'</span>] <span class="op">==</span> <span class="dv">2016</span>].copy()</span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>df_2016.loc[df_2016[<span class="st">'Name'</span>]<span class="op">==</span><span class="st">'Alice'</span>, <span class="st">'Bonus'</span>] <span class="op">=</span> <span class="dv">1234</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>df_2016.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+<th data-quarto-table-cell-role="th">Bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alice</td>
+<td>2016</td>
+<td>200</td>
+<td>1234</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>2016</td>
+<td>200</td>
+<td>2000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="根据正则匹配" class="level3">
+<h3 class="anchored" data-anchor-id="根据正则匹配">根据正则匹配</h3>
+<p>使用str.contains包含字符，使用~是不包含</p>
+</section>
+<section id="返回指定列数据" class="level3">
+<h3 class="anchored" data-anchor-id="返回指定列数据">返回指定列数据</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>df[<span class="dv">0</span>:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+<th data-quarto-table-cell-role="th">Bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Alice</td>
+<td>2016</td>
+<td>200</td>
+<td>1000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>2016</td>
+<td>200</td>
+<td>2000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Charlie</td>
+<td>2017</td>
+<td>60000</td>
+<td>3000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="根据label获取数据" class="level3">
+<h3 class="anchored" data-anchor-id="根据label获取数据">根据label获取数据</h3>
+<p>DataFrame.loc 根据Label获取数据 支持的如下3种输入 * 一个label, e.g.&nbsp;5 * list label, e.g.&nbsp;[‘a’,‘b’,‘c’] * slice object, e.g.&nbsp;‘a’:‘f’</p>
+</section>
+<section id="iloc-根据位置获取数据" class="level3">
+<h3 class="anchored" data-anchor-id="iloc-根据位置获取数据">iloc 根据位置获取数据</h3>
+<p>df.iloc根据索引位置和列位置获取数据，注意两个参数都必须是位置，不能一个位置一个label * 第一个参数是行索引,可以是具体的数字，也可以是区间，比如0:3 * 第二个参数是列索引</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Name      David
+Year       2017
+Salary    65000
+Bonus      4000
+Name: 3, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">3</span>:<span class="dv">5</span>, <span class="dv">0</span>:<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>David</td>
+<td>2017</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Emily</td>
+<td>2018</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>df.iloc[[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">4</span>],[<span class="dv">0</span>,<span class="dv">2</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Charlie</td>
+<td>60000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Emily</td>
+<td>70000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">1</span>:<span class="dv">3</span>, :]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+<th data-quarto-table-cell-role="th">Bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Bob</td>
+<td>2016</td>
+<td>200</td>
+<td>2000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Charlie</td>
+<td>2017</td>
+<td>60000</td>
+<td>3000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>df.iloc[:, <span class="dv">1</span>:<span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>2016</td>
+<td>200</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2016</td>
+<td>200</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2017</td>
+<td>60000</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2017</td>
+<td>65000</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2018</td>
+<td>70000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">1</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>2016</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>df.iat[<span class="dv">1</span>,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>2016</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="boolean索引" class="level2">
+<h2 class="anchored" data-anchor-id="boolean索引">Boolean索引</h2>
+<p>过滤数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">"Year"</span>]<span class="op">&gt;</span><span class="dv">2017</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Name</th>
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Salary</th>
+<th data-quarto-table-cell-role="th">Bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Emily</td>
+<td>2018</td>
+<td>70000</td>
+<td>5000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>使用isin()方法过滤数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> df.copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="op">=</span> pd.Series([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>], index<span class="op">=</span>pd.date_range(<span class="st">"20130102"</span>, periods<span class="op">=</span><span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a>s1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>2013-01-02    1
+2013-01-03    2
+2013-01-04    3
+2013-01-05    4
+2013-01-06    5
+2013-01-07    6
+Freq: D, dtype: int64</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="op">=</span> pd.Series([<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>,<span class="dv">16</span>,<span class="dv">17</span>])</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a>s2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0    11
+1    12
+2    13
+3    14
+4    15
+5    16
+6    17
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="日期处理" class="level2">
+<h2 class="anchored" data-anchor-id="日期处理">日期处理</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建测试数据</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'date'</span>: [<span class="st">'1994.03'</span>, <span class="st">'2020.02'</span>, <span class="st">'2020.03'</span>]})</span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 将字符串列转换为datetime列</span></span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'date'</span>], <span class="bu">format</span><span class="op">=</span><span class="st">'%Y.%m'</span>)</span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 打印转换后的结果</span></span>
+<span id="cb94-10"><a href="#cb94-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        date
+0 1994-03-01
+1 2020-02-01
+2 2020-03-01</code></pre>
+</div>
+</div>
+<p>设置值</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据label设置</span></span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>df.at[dates[<span class="dv">0</span>],<span class="st">"A"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>df.loc[dates[<span class="dv">0</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>date    NaT
+A       0.0
+Name: 2013-01-01 00:00:00, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 根据位置设置</span></span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>df.iat[<span class="dv">0</span>,<span class="dv">1</span>]<span class="op">=</span><span class="dv">0</span></span>
+<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>,:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>date    1994-03-01 00:00:00
+A                       0.0
+Name: 0, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 设置一个数组</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>df.loc[:,<span class="st">"D"</span>] <span class="op">=</span> np.array([<span class="dv">5</span>]<span class="op">*</span><span class="bu">len</span>(df))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>df.D</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0                      5
+1                      5
+2                      5
+2013-01-01 00:00:00    5
+Name: D, dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="数据转换" class="level2">
+<h2 class="anchored" data-anchor-id="数据转换">数据转换</h2>
+<p>可以使用函数或者Mapping转换数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({<span class="st">'food'</span>: [<span class="st">'bacon'</span>, <span class="st">'pulled pork'</span>, <span class="st">'bacon'</span>,</span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'Pastrami'</span>, <span class="st">'corned beef'</span>, <span class="st">'Bacon'</span>,</span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">'pastrami'</span>, <span class="st">'honey ham'</span>, <span class="st">'nova lox'</span>],</span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'ounces'</span>: [<span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="fl">7.5</span>, <span class="dv">8</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">6</span>]})</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">food</th>
+<th data-quarto-table-cell-role="th">ounces</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>bacon</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>pulled pork</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>bacon</td>
+<td>12.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Pastrami</td>
+<td>6.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>corned beef</td>
+<td>7.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Bacon</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>pastrami</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>honey ham</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>nova lox</td>
+<td>6.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a>lowercased <span class="op">=</span> data.food.<span class="bu">str</span>.lower()</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>lowercased</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0          bacon
+1    pulled pork
+2          bacon
+3       pastrami
+4    corned beef
+5          bacon
+6       pastrami
+7      honey ham
+8       nova lox
+Name: food, dtype: object</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a>meat_to_animal <span class="op">=</span> {</span>
+<span id="cb106-2"><a href="#cb106-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bacon'</span>: <span class="st">'pig'</span>,</span>
+<span id="cb106-3"><a href="#cb106-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pulled pork'</span>: <span class="st">'pig'</span>,</span>
+<span id="cb106-4"><a href="#cb106-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pastrami'</span>: <span class="st">'cow'</span>,</span>
+<span id="cb106-5"><a href="#cb106-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'corned beef'</span>: <span class="st">'cow'</span>,</span>
+<span id="cb106-6"><a href="#cb106-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'honey ham'</span>: <span class="st">'pig'</span>,</span>
+<span id="cb106-7"><a href="#cb106-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'nova lox'</span>: <span class="st">'salmon'</span></span>
+<span id="cb106-8"><a href="#cb106-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb106-9"><a href="#cb106-9" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'animal'</span>] <span class="op">=</span> lowercased.<span class="bu">map</span>(meat_to_animal)</span>
+<span id="cb106-10"><a href="#cb106-10" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">food</th>
+<th data-quarto-table-cell-role="th">ounces</th>
+<th data-quarto-table-cell-role="th">animal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>bacon</td>
+<td>4.0</td>
+<td>pig</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>pulled pork</td>
+<td>3.0</td>
+<td>pig</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>bacon</td>
+<td>12.0</td>
+<td>pig</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Pastrami</td>
+<td>6.0</td>
+<td>cow</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>corned beef</td>
+<td>7.5</td>
+<td>cow</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Bacon</td>
+<td>8.0</td>
+<td>pig</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>pastrami</td>
+<td>3.0</td>
+<td>cow</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>honey ham</td>
+<td>5.0</td>
+<td>pig</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>nova lox</td>
+<td>6.0</td>
+<td>salmon</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="替换值" class="level3">
+<h3 class="anchored" data-anchor-id="替换值">替换值</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.Series([<span class="fl">1.</span>, <span class="op">-</span><span class="fl">999.</span>, <span class="fl">2.</span>, <span class="op">-</span><span class="fl">999.</span>, <span class="op">-</span><span class="fl">1000.</span>, <span class="fl">3.</span>])</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0       1.0
+1    -999.0
+2       2.0
+3    -999.0
+4   -1000.0
+5       3.0
+dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb109-1"><a href="#cb109-1" aria-hidden="true" tabindex="-1"></a>data.replace(<span class="op">-</span><span class="dv">999</span>, np.nan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0       1.0
+1       NaN
+2       2.0
+3       NaN
+4   -1000.0
+5       3.0
+dtype: float64</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>0       1.0
+1    -999.0
+2       2.0
+3    -999.0
+4   -1000.0
+5       3.0
+dtype: float64</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="数据缺失" class="level2">
+<h2 class="anchored" data-anchor-id="数据缺失">数据缺失</h2>
+<p>pandas使用np.nan来表示数据缺失</p>
+<p>缺失数据处理 对空值的处理有3种办法 1. 去掉包含空值的列 2. 给空值赋值为平均值 3. 赋值的同时，添加一个标明数值缺失的属性</p>
+<section id="给空值赋值为平均值" class="level3">
+<h3 class="anchored" data-anchor-id="给空值赋值为平均值">给空值赋值为平均值</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.impute <span class="im">import</span> SimpleImputer</span>
+<span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a>df_si <span class="op">=</span> pd.DataFrame({<span class="st">'A'</span>: [<span class="dv">1</span>, np.nan, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>], <span class="st">'B'</span>: [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]})</span>
+<span id="cb113-4"><a href="#cb113-4" aria-hidden="true" tabindex="-1"></a>my_imputer <span class="op">=</span> SimpleImputer()</span>
+<span id="cb113-5"><a href="#cb113-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb113-6"><a href="#cb113-6" aria-hidden="true" tabindex="-1"></a>imputed_df_si <span class="op">=</span> pd.DataFrame(my_imputer.fit_transform(df_si))</span>
+<span id="cb113-7"><a href="#cb113-7" aria-hidden="true" tabindex="-1"></a>imputed_df_si</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.5</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4.0</td>
+<td>6.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>imputed_df_si_2 <span class="op">=</span> pd.DataFrame(my_imputer.transform(df_si))</span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>imputed_df_si_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">0</th>
+<th data-quarto-table-cell-role="th">1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>2.5</td>
+<td>3.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2.0</td>
+<td>4.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>3.0</td>
+<td>5.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>4.0</td>
+<td>6.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Reindexing 可以根据列进行数据变化，返回一个数据的拷贝</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> df.reindex(index<span class="op">=</span>dates[<span class="dv">0</span>:<span class="dv">4</span>], columns<span class="op">=</span><span class="bu">list</span>(df.columns)<span class="op">+</span>[<span class="st">"E"</span>])</span>
+<span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>df1.loc[dates[<span class="dv">0</span>]:dates[<span class="dv">1</span>], <span class="st">"E"</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-01</td>
+<td>NaT</td>
+<td>0.0</td>
+<td>5.0</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-02</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-03</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-04</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>df1.at[<span class="st">"20130102"</span>,<span class="st">"G"</span>]<span class="op">=</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+<th data-quarto-table-cell-role="th">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-01</td>
+<td>NaT</td>
+<td>0.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-02</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-03</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-04</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>DataFrame.dropna()</code>删处任何办好空数据的列，返回删除后的数据，不会改变原数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>df1.dropna(how<span class="op">=</span><span class="st">"any"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+<th data-quarto-table-cell-role="th">G</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+<th data-quarto-table-cell-role="th">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-01</td>
+<td>NaT</td>
+<td>0.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-02</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-03</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-04</td>
+<td>NaT</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>DataFrame.fillna</code>填充缺失的数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>df1.fillna(value<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+<th data-quarto-table-cell-role="th">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-01</td>
+<td>5</td>
+<td>0.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-02</td>
+<td>5</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-03</td>
+<td>5</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-04</td>
+<td>5</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>5.0</td>
+<td>5.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p><code>isna()</code>获取nan的boolean数据</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>pd.isna(df1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">A</th>
+<th data-quarto-table-cell-role="th">D</th>
+<th data-quarto-table-cell-role="th">E</th>
+<th data-quarto-table-cell-role="th">G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-01</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+<td>False</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-02</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>False</td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2013-01-03</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2013-01-04</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series([<span class="st">"8"</span>, <span class="dv">6</span>, <span class="st">"7.5"</span>, <span class="dv">3</span>, <span class="st">"0.9"</span>]) <span class="co"># mixed string and numeric values</span></span>
+<span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>s.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>dtype('O')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>pd.to_numeric(s) <span class="co"># convert everything to float values</span></span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>s.dtypes</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>dtype('O')</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="排序" class="level2">
+<h2 class="anchored" data-anchor-id="排序">排序</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'col1'</span>: [<span class="st">'A'</span>, <span class="st">'A'</span>, <span class="st">'B'</span>, np.nan, <span class="st">'D'</span>, <span class="st">'C'</span>],</span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'col2'</span>: [<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">4</span>],</span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'col3'</span>: [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">3</span>],</span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'col4'</span>: [<span class="st">'a'</span>, <span class="st">'B'</span>, <span class="st">'c'</span>, <span class="st">'D'</span>, <span class="st">'e'</span>, <span class="st">'F'</span>]</span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a>df.sort_values(by<span class="op">=</span>[<span class="st">'col1'</span>,<span class="st">'col2'</span>], ascending<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">col1</th>
+<th data-quarto-table-cell-role="th">col2</th>
+<th data-quarto-table-cell-role="th">col3</th>
+<th data-quarto-table-cell-role="th">col4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>A</td>
+<td>1</td>
+<td>1</td>
+<td>B</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">0</td>
+<td>A</td>
+<td>2</td>
+<td>0</td>
+<td>a</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>B</td>
+<td>9</td>
+<td>9</td>
+<td>c</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>C</td>
+<td>4</td>
+<td>3</td>
+<td>F</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>D</td>
+<td>7</td>
+<td>2</td>
+<td>e</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>NaN</td>
+<td>8</td>
+<td>4</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>要恢复排序可以使用reset_index</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>df.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">col1</th>
+<th data-quarto-table-cell-role="th">col2</th>
+<th data-quarto-table-cell-role="th">col3</th>
+<th data-quarto-table-cell-role="th">col4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>A</td>
+<td>2</td>
+<td>0</td>
+<td>a</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>A</td>
+<td>1</td>
+<td>1</td>
+<td>B</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>B</td>
+<td>9</td>
+<td>9</td>
+<td>c</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>NaN</td>
+<td>8</td>
+<td>4</td>
+<td>D</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>D</td>
+<td>7</td>
+<td>2</td>
+<td>e</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>C</td>
+<td>4</td>
+<td>3</td>
+<td>F</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="索引" class="level2">
+<h2 class="anchored" data-anchor-id="索引">索引</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame([(<span class="st">'bird'</span>, <span class="fl">389.0</span>),</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>                   (<span class="st">'bird'</span>, <span class="fl">24.0</span>),</span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>                   (<span class="st">'mammal'</span>, <span class="fl">80.5</span>),</span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>                   (<span class="st">'mammal'</span>, np.nan)],</span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>                  index<span class="op">=</span>[<span class="st">'falcon'</span>, <span class="st">'parrot'</span>, <span class="st">'lion'</span>, <span class="st">'monkey'</span>],</span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a>                  columns<span class="op">=</span>(<span class="st">'class'</span>, <span class="st">'max_speed'</span>))</span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th">max_speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">falcon</td>
+<td>bird</td>
+<td>389.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">parrot</td>
+<td>bird</td>
+<td>24.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">lion</td>
+<td>mammal</td>
+<td>80.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">monkey</td>
+<td>mammal</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>当我们执行reset_index后，旧的index会作用一列添加到数据中</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb129-1"><a href="#cb129-1" aria-hidden="true" tabindex="-1"></a>df.reset_index()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">index</th>
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th">max_speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>falcon</td>
+<td>bird</td>
+<td>389.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>parrot</td>
+<td>bird</td>
+<td>24.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>lion</td>
+<td>mammal</td>
+<td>80.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>monkey</td>
+<td>mammal</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>我们可以使用drop参数移除索引</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>df.reset_index(drop<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th">max_speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>bird</td>
+<td>389.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>bird</td>
+<td>24.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>mammal</td>
+<td>80.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>mammal</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<section id="apply" class="level3">
+<h3 class="anchored" data-anchor-id="apply">Apply</h3>
+<p><code>DataFrame.apply()</code>应用一个用户自定义的函数到数据上</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb131"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th">max_speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">falcon</td>
+<td>bird</td>
+<td>389.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">parrot</td>
+<td>bird</td>
+<td>24.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">lion</td>
+<td>mammal</td>
+<td>80.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">monkey</td>
+<td>mammal</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">apply</span>(np.cumsum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">class</th>
+<th data-quarto-table-cell-role="th">max_speed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">falcon</td>
+<td>bird</td>
+<td>389.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">parrot</td>
+<td>birdbird</td>
+<td>413.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">lion</td>
+<td>birdbirdmammal</td>
+<td>493.5</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">monkey</td>
+<td>birdbirdmammalmammal</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="pandas函数" class="level2">
+<h2 class="anchored" data-anchor-id="pandas函数">Pandas函数</h2>
+<p>DataFrame.corr(method=‘pearson’, min_periods=1) 计算相关系数</p>
+<p>参数说明：</p>
+<p>method：可选值为{‘pearson’, ‘kendall’, ‘spearman’}</p>
+<ul>
+<li>pearson：Pearson相关系数来衡量两个数据集合是否在一条线上面，即针对线性数据的相关系数计算，针对非线性数据便会有误差。</li>
+<li>kendall：用于反映分类变量相关性的指标，即针对无序序列的相关系数，非正太分布的数据</li>
+<li>spearman：非线性的，非正太分布的数据的相关系数</li>
+</ul>
+<p>min_periods：样本最少的数据量</p>
+<p>返回值：各类型之间的相关系数DataFrame表格。</p>
+<p>两组数据间的相关性计算可以分为如下3种情况：</p>
+<ol type="1">
+<li>数值数据与分类数据</li>
+<li>数值数据与数值数据</li>
+<li>分类数据与分类数据</li>
+</ol>
+<section id="数值与数值的相关性" class="level3">
+<h3 class="anchored" data-anchor-id="数值与数值的相关性">数值与数值的相关性</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb133"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({<span class="st">'化妆品费'</span>: [<span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">120</span>, <span class="dv">20</span>, <span class="dv">70</span>, <span class="dv">150</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">80</span>, <span class="dv">100</span>],</span>
+<span id="cb133-4"><a href="#cb133-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'置装费'</span>: [<span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">250</span>, <span class="dv">50</span>, <span class="dv">120</span>, <span class="dv">300</span>, <span class="dv">100</span>, <span class="dv">150</span>, <span class="dv">20</span>, <span class="dv">180</span>]})</span>
+<span id="cb133-5"><a href="#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.corr()) <span class="co"># 计算所有的变量的两两相关性</span></span>
+<span id="cb133-6"><a href="#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data[<span class="st">'化妆品费'</span>].corr(data[<span class="st">'置装费'</span>])) <span class="co"># 只计算选择的两个变量的相关性</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          化妆品费       置装费
+化妆品费  1.000000  0.850918
+置装费   0.850918  1.000000
+0.8509180035311159</code></pre>
+</div>
+</div>
+</section>
+<section id="数值与分类的相关性" class="level3">
+<h3 class="anchored" data-anchor-id="数值与分类的相关性">数值与分类的相关性</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 情况1：分类标签为数字</span></span>
+<span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({<span class="st">'id'</span>: [<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>],</span>
+<span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'age'</span>: [<span class="dv">27</span>, <span class="dv">33</span>, <span class="dv">16</span>, <span class="dv">29</span>, <span class="dv">32</span>, <span class="dv">23</span>, <span class="dv">25</span>, <span class="dv">28</span>, <span class="dv">22</span>, <span class="dv">18</span>, <span class="dv">26</span>, <span class="dv">26</span>, <span class="dv">15</span>, <span class="dv">29</span>, <span class="dv">26</span>]})</span>
+<span id="cb135-4"><a href="#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'pearson:'</span>, data[<span class="st">'id'</span>].corr(data[<span class="st">'age'</span>]))</span>
+<span id="cb135-5"><a href="#cb135-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'spearman'</span>, data[<span class="st">'id'</span>].corr(data[<span class="st">'age'</span>], method<span class="op">=</span><span class="st">'spearman'</span>))</span>
+<span id="cb135-6"><a href="#cb135-6" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb135-7"><a href="#cb135-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 情况2：分类标签为字符串</span></span>
+<span id="cb135-8"><a href="#cb135-8" aria-hidden="true" tabindex="-1"></a>data1 <span class="op">=</span> pd.DataFrame({<span class="st">'id'</span>: [<span class="st">'c'</span>, <span class="st">'b'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'a'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'a'</span>],</span>
+<span id="cb135-9"><a href="#cb135-9" aria-hidden="true" tabindex="-1"></a>                     <span class="st">'age'</span>: [<span class="dv">27</span>, <span class="dv">33</span>, <span class="dv">16</span>, <span class="dv">29</span>, <span class="dv">32</span>, <span class="dv">23</span>, <span class="dv">25</span>, <span class="dv">28</span>, <span class="dv">22</span>, <span class="dv">18</span>, <span class="dv">26</span>, <span class="dv">26</span>, <span class="dv">15</span>, <span class="dv">29</span>, <span class="dv">26</span>]})</span>
+<span id="cb135-10"><a href="#cb135-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'spearman'</span>, data1[<span class="st">'id'</span>].corr(data1[<span class="st">'age'</span>], method<span class="op">=</span><span class="st">'spearman'</span>))</span>
+<span id="cb135-11"><a href="#cb135-11" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb135-12"><a href="#cb135-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 输出</span></span>
+<span id="cb135-13"><a href="#cb135-13" aria-hidden="true" tabindex="-1"></a><span class="co"># pearson: 0.4465155114816965</span></span>
+<span id="cb135-14"><a href="#cb135-14" aria-hidden="true" tabindex="-1"></a><span class="co"># spearman 0.4016086046008866</span></span>
+<span id="cb135-15"><a href="#cb135-15" aria-hidden="true" tabindex="-1"></a><span class="co"># spearman 0.4016086046008866</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>pearson: 0.4465155114816965
+spearman 0.4016086046008866
+spearman 0.4016086046008866</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

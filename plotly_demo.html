@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="使用plotly 绘制图形">
+
+<title>learn-data-analysis - Plotly</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="learn-data-analysis - Plotly">
+<meta property="og:description" content="使用plotly 绘制图形">
+<meta property="og:image" content="https://pymjer.github.io/learn-data-analysis/06_plotly_demo_files/figure-html/cell-3-output-2.png">
+<meta property="og:site-name" content="learn-data-analysis">
+<meta property="og:image:height" content="429">
+<meta property="og:image:width" content="543">
+<meta name="twitter:title" content="learn-data-analysis - Plotly">
+<meta name="twitter:description" content="使用plotly 绘制图形">
+<meta name="twitter:image" content="https://pymjer.github.io/learn-data-analysis/06_plotly_demo_files/figure-html/cell-3-output-2.png">
+<meta name="twitter:image-height" content="429">
+<meta name="twitter:image-width" content="543">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">learn-data-analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Overview</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pymjer/learn-data-analysis" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./plotly_demo.html">Plotly</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Basic</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Pandas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Index</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/part1_core_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/part2_applied_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/part3_func_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matplot_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matplot</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./seaborn_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seaborn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./plotly_demo.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Plotly</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sklearn_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scikit-Learn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pytorch_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PyTorch</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fastai_core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fastai Core</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#基本图形" id="toc-基本图形" class="nav-link active" data-scroll-target="#基本图形">基本图形</a></li>
+  <li><a href="#折线图" id="toc-折线图" class="nav-link" data-scroll-target="#折线图">折线图</a></li>
+  <li><a href="#热力图" id="toc-热力图" class="nav-link" data-scroll-target="#热力图">热力图</a>
+  <ul class="collapse">
+  <li><a href="#热力图自定义颜色" id="toc-热力图自定义颜色" class="nav-link" data-scroll-target="#热力图自定义颜色">热力图自定义颜色</a></li>
+  </ul></li>
+  <li><a href="#矩形图" id="toc-矩形图" class="nav-link" data-scroll-target="#矩形图">矩形图</a></li>
+  <li><a href="#散列图scatter" id="toc-散列图scatter" class="nav-link" data-scroll-target="#散列图scatter">散列图(Scatter)</a>
+  <ul class="collapse">
+  <li><a href="#散列图配置边缘分布图" id="toc-散列图配置边缘分布图" class="nav-link" data-scroll-target="#散列图配置边缘分布图">散列图配置边缘分布图</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/pymjer/learn-data-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Plotly</h1>
+</div>
+
+<div>
+  <div class="description">
+    使用plotly 绘制图形
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objs <span class="im">as</span> go</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.figure_factory <span class="im">as</span> ff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="基本图形" class="level2">
+<h2 class="anchored" data-anchor-id="基本图形">基本图形</h2>
+<p>参见: <a href="https://plotly.com/python/text-and-annotations/">plotly文档</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> pd.Series(np.random.randn(<span class="dv">1000</span>), index<span class="op">=</span>pd.date_range(<span class="st">"1/1/2000"</span>, periods<span class="op">=</span><span class="dv">1000</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> ts.cumsum()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ts.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-3-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(np.random.randn(<span class="dv">1000</span>,<span class="dv">4</span>), index<span class="op">=</span>ts.index, columns<span class="op">=</span><span class="bu">list</span>(<span class="st">"ABCD"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.cumsum()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df.plot()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'best'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;matplotlib.legend.Legend&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 640x480 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-4-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="折线图" class="level2">
+<h2 class="anchored" data-anchor-id="折线图">折线图</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.arange(<span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>d2 <span class="op">=</span> [<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">7</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot(d2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ax3 <span class="op">=</span> fig.add_subplot(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fig.savefig('aa.jpg') # 保存图像</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>np.random.randn(<span class="dv">50</span>).cumsum()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array([-0.65497875, -0.87539609, -1.95037822, -2.55182361, -0.95400323,
+        0.42055803, -0.02399923,  0.77984132,  0.94048919, -0.2804123 ,
+       -1.26969177, -0.8656517 , -0.73684343, -0.429114  , -2.28301825,
+       -1.20596026, -1.89069725, -0.66237253, -2.00394807, -2.07219641,
+       -3.07694994, -2.13044571, -2.27133694, -2.35227459, -2.07804544,
+       -2.65075765, -4.16473185, -5.79079532, -5.80918646, -6.886709  ,
+       -6.48238632, -6.79420837, -5.93776663, -6.65007544, -6.63828068,
+       -6.36765117, -5.36893642, -5.1920758 , -5.13324687, -4.06667904,
+       -3.46112112, -2.23527842, -2.44551486,  0.21841808,  1.82434059,
+        1.50840004,  2.83121464,  2.01716621,  1.7440124 ,  2.70610864])</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.plot(np.random.randn(<span class="dv">50</span>).cumsum(), <span class="st">'k--'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dn <span class="op">=</span> np.random.randn(<span class="dv">5</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dn)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dn.cumsum())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[ 1.0926909   0.27452563  0.06956881  0.64107944 -0.46210662]
+[1.0926909  1.36721653 1.43678535 2.07786478 1.61575816]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> pd.Series(np.random.randn(<span class="dv">10</span>).cumsum(), index<span class="op">=</span>np.arange(<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>s.plot()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Axes: &gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="06_plotly_demo_files/figure-html/cell-14-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="热力图" class="level2">
+<h2 class="anchored" data-anchor-id="热力图">热力图</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.figure_factory <span class="im">as</span> ff</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> [[<span class="fl">1.1</span>, <span class="fl">.3</span>, <span class="fl">.5</span>, <span class="fl">.7</span>, <span class="fl">.9</span>],</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">1</span>, <span class="fl">.8</span>, <span class="fl">.6</span>, <span class="fl">.4</span>, <span class="fl">.2</span>],</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">.2</span>, <span class="dv">0</span>, <span class="fl">.5</span>, <span class="fl">.7</span>, <span class="fl">.9</span>],</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">.9</span>, <span class="fl">.8</span>, <span class="fl">.4</span>, <span class="fl">.2</span>, <span class="dv">0</span>]]</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> ff.create_annotated_heatmap(z)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<section id="热力图自定义颜色" class="level3">
+<h3 class="anchored" data-anchor-id="热力图自定义颜色">热力图自定义颜色</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.figure_factory <span class="im">as</span> ff</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> [[<span class="fl">1.1</span>, <span class="fl">.3</span>, <span class="fl">.5</span>, <span class="fl">.7</span>, <span class="fl">.9</span>],</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>     [<span class="dv">1</span>, <span class="fl">.8</span>, <span class="fl">.6</span>, <span class="fl">.4</span>, <span class="fl">.2</span>],</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">.2</span>, <span class="dv">0</span>, <span class="fl">.5</span>, <span class="fl">.7</span>, <span class="fl">.9</span>],</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>     [<span class="fl">.9</span>, <span class="fl">.8</span>, <span class="fl">.4</span>, <span class="fl">.2</span>, <span class="dv">0</span>]]</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 添加参数：colorscale</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> ff.create_annotated_heatmap(z,colorscale<span class="op">=</span><span class="st">'Viridis'</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="矩形图" class="level2">
+<h2 class="anchored" data-anchor-id="矩形图">矩形图</h2>
+<p>柱形图有两种histogram和bar</p>
+<ul>
+<li>hostogram用来描述numerical变量，需要指定参数nbins，表示变量的长度</li>
+<li>bar用来描述categorical类型的变量，对变量进行分类</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> px.data.tips()</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.histogram(df, x<span class="op">=</span><span class="st">"total_bill"</span>, nbins<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">total_bill</th>
+<th data-quarto-table-cell-role="th">tip</th>
+<th data-quarto-table-cell-role="th">sex</th>
+<th data-quarto-table-cell-role="th">smoker</th>
+<th data-quarto-table-cell-role="th">day</th>
+<th data-quarto-table-cell-role="th">time</th>
+<th data-quarto-table-cell-role="th">size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>16.99</td>
+<td>1.01</td>
+<td>Female</td>
+<td>No</td>
+<td>Sun</td>
+<td>Dinner</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>10.34</td>
+<td>1.66</td>
+<td>Male</td>
+<td>No</td>
+<td>Sun</td>
+<td>Dinner</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>21.01</td>
+<td>3.50</td>
+<td>Male</td>
+<td>No</td>
+<td>Sun</td>
+<td>Dinner</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>23.68</td>
+<td>3.31</td>
+<td>Male</td>
+<td>No</td>
+<td>Sun</td>
+<td>Dinner</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>24.59</td>
+<td>3.61</td>
+<td>Female</td>
+<td>No</td>
+<td>Sun</td>
+<td>Dinner</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">239</td>
+<td>29.03</td>
+<td>5.92</td>
+<td>Male</td>
+<td>No</td>
+<td>Sat</td>
+<td>Dinner</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">240</td>
+<td>27.18</td>
+<td>2.00</td>
+<td>Female</td>
+<td>Yes</td>
+<td>Sat</td>
+<td>Dinner</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">241</td>
+<td>22.67</td>
+<td>2.00</td>
+<td>Male</td>
+<td>Yes</td>
+<td>Sat</td>
+<td>Dinner</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">242</td>
+<td>17.82</td>
+<td>1.75</td>
+<td>Male</td>
+<td>No</td>
+<td>Sat</td>
+<td>Dinner</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">243</td>
+<td>18.78</td>
+<td>3.00</td>
+<td>Female</td>
+<td>No</td>
+<td>Thur</td>
+<td>Dinner</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+
+<p>244 rows × 7 columns</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>px.bar(df, x<span class="op">=</span>df.index, y<span class="op">=</span><span class="st">"total_bill"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<p>调整axis</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(x<span class="op">=</span>[<span class="st">"a"</span>,<span class="st">"a"</span>,<span class="st">"b"</span>,<span class="dv">3</span>], y<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>])</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>fig.update_xaxes(<span class="bu">type</span><span class="op">=</span><span class="st">'category'</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+</section>
+<section id="散列图scatter" class="level2">
+<h2 class="anchored" data-anchor-id="散列图scatter">散列图(Scatter)</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> px.data.iris()</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(df, x<span class="op">=</span><span class="st">"sepal_width"</span>, y<span class="op">=</span><span class="st">"sepal_length"</span>, color<span class="op">=</span><span class="st">"species"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                 size<span class="op">=</span><span class="st">'petal_length'</span>, hover_data<span class="op">=</span>[<span class="st">'petal_width'</span>])</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     sepal_length  sepal_width  petal_length  petal_width    species  \
+0             5.1          3.5           1.4          0.2     setosa   
+1             4.9          3.0           1.4          0.2     setosa   
+2             4.7          3.2           1.3          0.2     setosa   
+3             4.6          3.1           1.5          0.2     setosa   
+4             5.0          3.6           1.4          0.2     setosa   
+..            ...          ...           ...          ...        ...   
+145           6.7          3.0           5.2          2.3  virginica   
+146           6.3          2.5           5.0          1.9  virginica   
+147           6.5          3.0           5.2          2.0  virginica   
+148           6.2          3.4           5.4          2.3  virginica   
+149           5.9          3.0           5.1          1.8  virginica   
+
+     species_id  
+0             1  
+1             1  
+2             1  
+3             1  
+4             1  
+..          ...  
+145           3  
+146           3  
+147           3  
+148           3  
+149           3  
+
+[150 rows x 6 columns]</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+<section id="散列图配置边缘分布图" class="level3">
+<h3 class="anchored" data-anchor-id="散列图配置边缘分布图">散列图配置边缘分布图</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> px.data.iris()</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.scatter(df, x<span class="op">=</span><span class="st">"sepal_length"</span>, y<span class="op">=</span><span class="st">"sepal_width"</span>,  marginal_x <span class="op">=</span> <span class="st">"box"</span>,marginal_y <span class="op">=</span> <span class="st">"violin"</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

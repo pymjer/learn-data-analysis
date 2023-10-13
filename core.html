@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="数据分析基础知识">
+
+<title>learn-data-analysis - Basic</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="learn-data-analysis - Basic">
+<meta property="og:description" content="数据分析基础知识">
+<meta property="og:site-name" content="learn-data-analysis">
+<meta name="twitter:title" content="learn-data-analysis - Basic">
+<meta name="twitter:description" content="数据分析基础知识">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">learn-data-analysis</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Overview</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/pymjer/learn-data-analysis" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./core.html">Basic</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Basic</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Pandas</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Index</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/part1_core_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part1</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/part2_applied_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part2</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pandas/part3_func_pandas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pandas Part3</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matplot_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matplot</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./seaborn_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Seaborn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./plotly_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plotly</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./sklearn_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Scikit-Learn</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pytorch_demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">PyTorch</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fastai_core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fastai Core</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#python" id="toc-python" class="nav-link active" data-scroll-target="#python">Python</a>
+  <ul class="collapse">
+  <li><a href="#pathlib" id="toc-pathlib" class="nav-link" data-scroll-target="#pathlib">pathlib</a></li>
+  <li><a href="#numpy" id="toc-numpy" class="nav-link" data-scroll-target="#numpy">Numpy</a>
+  <ul class="collapse">
+  <li><a href="#the-n-dimensional-arrayndarray" id="toc-the-n-dimensional-arrayndarray" class="nav-link" data-scroll-target="#the-n-dimensional-arrayndarray">The N-dimensional array(ndarray)</a></li>
+  <li><a href="#np.maximum" id="toc-np.maximum" class="nav-link" data-scroll-target="#np.maximum"><code>np.maximum()</code></a></li>
+  </ul></li>
+  <li><a href="#datetimes-and-timedeltas" id="toc-datetimes-and-timedeltas" class="nav-link" data-scroll-target="#datetimes-and-timedeltas">Datetimes and Timedeltas</a></li>
+  <li><a href="#joblib" id="toc-joblib" class="nav-link" data-scroll-target="#joblib">joblib</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/pymjer/learn-data-analysis/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Basic</h1>
+</div>
+
+<div>
+  <div class="description">
+    数据分析基础知识
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<section id="python" class="level1">
+<h1>Python</h1>
+<section id="pathlib" class="level2">
+<h2 class="anchored" data-anchor-id="pathlib">pathlib</h2>
+<p>pathlib模块提供了处理文件路径和目录路径的功能，它是Python标准库中的一部分。pathlib模块以面向对象的方式提供了简洁而直观的API，用于操作文件系统中的路径。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建路径对象</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> Path(<span class="st">'./test/hello'</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 获取路径的各个部分</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'文件名:'</span>, path.name)          <span class="co"># file.txt</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'父目录:'</span>, path.parent)        <span class="co"># /path/to</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'后缀:'</span>, path.suffix)          <span class="co"># .txt</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'文件名（不含后缀）:'</span>, path.stem)  <span class="co"># file</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 判断路径是否存在</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'路径是否存在:'</span>, path.exists())     <span class="co"># False</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建目录</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>path.parent.mkdir(parents<span class="op">=</span><span class="va">True</span>, exist_ok<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 创建文件</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>path.touch()</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 写入文件内容</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>path.write_text(<span class="st">'Hello, World!'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 读取文件内容</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>content <span class="op">=</span> path.read_text()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'文件内容:'</span>, content)   <span class="co"># Hello, World!</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 遍历目录中的文件</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>directory <span class="op">=</span> Path(<span class="st">'./test'</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> directory.iterdir():</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">file</span>.is_file():</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'文件:'</span>, <span class="bu">file</span>.name)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 连接路径</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>new_path <span class="op">=</span> path.parent <span class="op">/</span> <span class="st">'new_file.txt'</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'新路径:'</span>, new_path)    <span class="co"># /path/to/new_file.txt</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># 解析路径</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>parsed_path <span class="op">=</span> Path(<span class="st">'./test/'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'目录名:'</span>, parsed_path.parent.name)   <span class="co"># to</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># 规范化路径</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>normalized_path <span class="op">=</span> Path(<span class="st">'./test/'</span>)</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'规范化路径:'</span>, normalized_path.resolve())   <span class="co"># /path/file.txt</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co"># 删除文件</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>path.unlink()</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co"># 验证文件是否存在</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'文件是否存在:'</span>, path.exists())  <span class="co"># False</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co"># 删除目录</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>directory.rmdir()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>文件名: hello
+父目录: .
+后缀: 
+文件名（不含后缀）: hello
+路径是否存在: False
+文件内容: Hello, World!
+新路径: new_file.txt
+目录名: 
+规范化路径: /Users/hawkins/Work/learn/learn-data-analysis/nbs/test
+文件是否存在: False</code></pre>
+</div>
+</div>
+</section>
+<section id="numpy" class="level2">
+<h2 class="anchored" data-anchor-id="numpy">Numpy</h2>
+<p>Numpy教程 <a href="https://numpy.org/doc/stable/user/index.html">User Guide</a></p>
+<p>NumPy 提供了一个 N维的数组类型， ndarray, 用于描述相同类型的items。</p>
+<section id="the-n-dimensional-arrayndarray" class="level3">
+<h3 class="anchored" data-anchor-id="the-n-dimensional-arrayndarray">The N-dimensional array(ndarray)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>], [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>]], np.int32)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.ndarray</code></pre>
+</div>
+</div>
+</section>
+<section id="np.maximum" class="level3">
+<h3 class="anchored" data-anchor-id="np.maximum"><code>np.maximum()</code></h3>
+<p><code>np.maximum()</code> 是 NumPy 库中的一个函数，用于比较两个数组或标量，并返回元素级别上的较大值。</p>
+<p>下面是 <code>np.maximum()</code> 的使用示例：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 np.maximum() 比较两个标量</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>max_scalar <span class="op">=</span> np.maximum(<span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_scalar)  <span class="co"># 输出：5</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 使用 np.maximum() 比较两个数组</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>array1 <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>])</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>array2 <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>])</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>max_array <span class="op">=</span> np.maximum(array1, array2)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(max_array)  <span class="co"># 输出：[2 4 3 5 5]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5
+[2 4 3 5 5]</code></pre>
+</div>
+</div>
+<p>在上述示例中，我们首先使用 <code>np.maximum()</code> 比较了两个标量，即 <code>3</code> 和 <code>5</code>。函数返回两个标量中的较大值 <code>5</code>。</p>
+<p>接下来，我们使用 <code>np.maximum()</code> 比较了两个数组 <code>array1</code> 和 <code>array2</code>。函数对应位置上的元素进行比较，并返回一个新的数组，其中包含每个位置上的较大值。在这个例子中，<code>max_array</code> 的第一个元素是 <code>2</code>（<code>1</code> 和 <code>2</code> 中的较大值），第二个元素是 <code>4</code>（<code>2</code> 和 <code>4</code> 中的较大值），以此类推。</p>
+<p>总结一下，<code>np.maximum()</code> 函数用于比较两个数组或标量，并返回一个新的数组，其中包含元素级别上的较大值。这个函数在处理数据比较和选择最大值等场景中非常有用。</p>
+</section>
+</section>
+<section id="datetimes-and-timedeltas" class="level2">
+<h2 class="anchored" data-anchor-id="datetimes-and-timedeltas">Datetimes and Timedeltas</h2>
+<p><code>numpy.datetime64</code>和Python标准库中的<code>datetime</code>模块都是用于处理日期和时间的工具，但它们有一些不同之处。</p>
+<ul>
+<li>数据类型：<code>numpy.datetime64</code>是NumPy中专门用于处理日期和时间的数据类型，而<code>datetime</code>是Python标准库中的一个模块，提供了多种日期和时间处理的工具类和函数，包括日期、时间、时间差、时区等等。</li>
+<li>精度：<code>numpy.datetime64</code>的精度比<code>datetime</code>高，可以处理更小的时间间隔（如纳秒、微秒级别的时间间隔）。而<code>datetime</code>的精度最小只能到微秒级别。</li>
+<li>内存占用：<code>numpy.datetime64</code>的内存占用比<code>datetime</code>更小，因为它使用了固定长度的二进制格式来表示日期和时间，而<code>datetime</code>使用了Python的对象模型，需要更多的内存。</li>
+<li>运算：<code>numpy.datetime64</code>可以像数字一样进行运算，例如可以进行加减乘除、比较大小等操作，而<code>datetime</code>需要使用特定的方法来进行日期和时间的运算。</li>
+<li>兼容性：<code>numpy.datetime64</code>与NumPy的其他数据类型（如数组）可以无缝集成使用，而<code>datetime</code>需要进行转换后才能和其他数据类型一起使用。</li>
+</ul>
+<p><code>numpy.datetime64</code>和<code>datetime</code>都提供了一些常用的方法来处理日期和时间，例如获取当前时间、格式化输出、计算时间差等。以下是它们的一些常用方法：</p>
+<ul>
+<li><p><code>numpy.datetime64</code>的常用方法：</p>
+<ul>
+<li><code>numpy.datetime64('now')</code>：获取当前时间戳。</li>
+<li><code>numpy.datetime64('2000-01-01')</code>：创建一个指定日期的时间戳。</li>
+<li><code>numpy.datetime64('2000-01-01') + np.timedelta64(1, 'D')</code>：在时间戳上加上一段时间间隔。</li>
+<li><code>numpy.datetime64('2000-01-01').astype('datetime64[M]')</code>：将时间戳转换为指定的时间差类型。</li>
+</ul></li>
+<li><p><code>datetime</code>的常用方法：</p>
+<ul>
+<li><code>datetime.datetime.now()</code>：获取当前时间。</li>
+<li><code>datetime.datetime(2000, 1, 1)</code>：创建一个指定日期的时间对象。</li>
+<li><code>datetime.datetime(2000, 1, 1) + datetime.timedelta(days=1)</code>：在时间对象上加上一段时间间隔。</li>
+<li><code>datetime.datetime.strftime('%Y-%m-%d')</code>：将时间对象格式化输出为字符串。</li>
+</ul></li>
+<li><p><code>Timestamp</code> 的常用方法：</p>
+<ul>
+<li>pd.Timestamp(‘now’)：获取当前时间戳。</li>
+<li>pd.Timestamp(‘2000-01-01’)：创建一个指定日期的时间戳。</li>
+<li>pd.Timestamp(‘2000-01-01’) + pd.Timedelta(days=1)：在时间戳上加上一段时间间隔。</li>
+<li>pd.Timestamp(‘2000-01-01’).strftime(‘%Y-%m-%d’)：将时间戳格式化输出为字符串。</li>
+</ul></li>
+</ul>
+<p>需要注意的是，<code>numpy.datetime64</code>和<code>datetime</code>的方法命名和用法有些不同，需要根据具体的需求选择合适的工具。在使用这些方法时，需要注意数据类型的转换和精度的控制，以保证计算结果的正确性和可靠性。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>year <span class="op">=</span> <span class="dv">2021</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>month <span class="op">=</span> <span class="dv">5</span>  </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>day <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>date <span class="op">=</span> np.datetime64(<span class="ss">f'</span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>month<span class="sc">:02}</span><span class="ss">-</span><span class="sc">{</span>day<span class="sc">:02}</span><span class="ss">'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(date)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 2021-05-25</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2021-05-25</code></pre>
+</div>
+</div>
+<p>用一个整数和一个日期单位来创建datetime，时间的开始是 UNIX的开端，也就是1970年</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>np.datetime64(<span class="dv">1</span>, <span class="st">'Y'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.datetime64('1971')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>np.array([<span class="st">'2007-07-13'</span>, <span class="st">'2008-08-09'</span>, <span class="st">'2009-09-12'</span>], dtype<span class="op">=</span><span class="st">'datetime64'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>array(['2007-07-13', '2008-08-09', '2009-09-12'], dtype='datetime64[D]')</code></pre>
+</div>
+</div>
+<p>使用timedelta64进行时间计算</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>np.datetime64(<span class="st">'2020-01-02'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.datetime64('2020-01-22')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>np.timedelta64(<span class="dv">60</span>, <span class="st">'Y'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.timedelta64(60,'Y')</code></pre>
+</div>
+</div>
+<p>Pandas中支持以下单位的时间差值：</p>
+<ul>
+<li>‘D’：天</li>
+<li>‘h’：小时</li>
+<li>‘m’：分钟</li>
+<li>‘s’：秒</li>
+<li>‘ms’：毫秒</li>
+<li>‘us’：微秒</li>
+<li>‘ns’：纳秒</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>np.datetime64(<span class="st">'2009-01-05'</span>) <span class="op">+</span> np.timedelta64(<span class="dv">20</span>, <span class="st">'Y'</span>).astype(<span class="st">'m8[D]'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.datetime64('2029-01-04')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 过60年, m8[D] 和 timedelta64[D] 意思相同</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>np.datetime64(<span class="st">'1989-04-10'</span>) <span class="op">+</span> np.timedelta64(<span class="dv">60</span>, <span class="st">'Y'</span>).astype(<span class="st">'timedelta64[D]'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.datetime64('2049-04-09')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 计算年龄, &gt; 表示向上舍入， &lt;  表示向下舍入, 当时间差的小数部分小于0.5时，向下舍入和向上舍入的结果是一致的。但是，当时间差的小数部分大于等于0.5时，向下舍入和向上舍入的结果是不同的</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>(np.datetime64(<span class="st">'now'</span>) <span class="op">-</span> np.datetime64(<span class="st">'1999-12-15'</span>)).astype(<span class="st">'&gt;m8[Y]'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<pre><code>numpy.timedelta64(23,'Y')</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>dt1 <span class="op">=</span> pd.to_datetime(<span class="st">'2020-01'</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(dt1))</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 过去60年</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>dt1_pass_60_year <span class="op">=</span> dt1 <span class="op">+</span> pd.Timedelta(<span class="st">'365D'</span>) <span class="op">*</span> <span class="dv">60</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dt1_pass_60_year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas._libs.tslibs.timestamps.Timestamp'&gt;
+2079-12-17 00:00:00</code></pre>
+</div>
+</div>
+</section>
+<section id="joblib" class="level2">
+<h2 class="anchored" data-anchor-id="joblib">joblib</h2>
+<p>joblib 是一个用于高效处理 Python 对象持久化和并行计算的库。joblib 提供了 Parallel 和 delayed 对象，用于简化并行计算任务的编写和执行。</p>
+<p>Parallel 对象用于并行执行多个函数调用，而 delayed 对象用于将函数调用延迟执行。</p>
+<p>下面是一个示例，展示如何使用 Parallel 和 delayed 对象进行并行计算：</p>
+<pre><code>from joblib import Parallel, delayed
+
+def square(x):
+    return x**2
+
+data = [1,2,3,4,5]
+
+results = Parallel(-1)(delayed(square)(x) for x in data)
+
+print(results)</code></pre>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,10 @@
+[
+  {
+    "listing": "/pandas/index.html",
+    "items": [
+      "/pandas/part1_core_pandas.html",
+      "/pandas/part2_applied_pandas.html",
+      "/pandas/part3_func_pandas.html"
+    ]
+  }
+]
