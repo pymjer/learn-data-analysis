@@ -2,12 +2,15 @@ website:
   sidebar:
     contents:
       - 00_core.ipynb
+      - 00_numpy_demo.ipynb
       - section: Pandas
         contents:
           - pandas/index.qmd
           - pandas/01_part1_core_pandas.ipynb
           - pandas/01_part2_applied_pandas.ipynb
           - pandas/01_part3_func_pandas.ipynb
+      - 02_geopandas_demo.ipynb
+      - 03_geopy_demo.ipynb
       - 04_matplot_demo.ipynb
       - 05_seaborn_demo.ipynb
       - 06_plotly_demo.ipynb
