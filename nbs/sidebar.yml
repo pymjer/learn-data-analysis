@@ -17,3 +17,4 @@ website:
       - 07_sklearn_demo.ipynb
       - 08_pytorch_demo.ipynb
       - 09_fastai_core.ipynb
+      - 10_fastai_demo.ipynb
